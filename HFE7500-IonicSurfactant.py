@@ -43,3 +43,8 @@ def GammaDOTd(Qoil, wjet0sol):
 #     return etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd(wjet0sol, Qw, H, wn)) ** p)/.etaINF→0.00532/.Kd→1.276/.B1→4.578;
 def etaw(Qoil, wjet0sol):
     return Module( {etaINF1 = 0.001, B1 = 4.691}, etaINF1 + (Kd - etaINF1)/(1 + (B1 * GammaDOTd(Qoil, wjet0sol)) ** p) ) # FIXME: What is Module?
+
+def lhs(Qoil, wjet0sol)
+    return wjet0sol * (1 + etaw(Qoil, wjet0sol) * ((Qw/Qoil)/etaoNN(Qoil, wjet0sol)))
+def rhs(Qoil, wjet0sol)
+    return wn * (etaw(Qoil, wjet0sol) * Qw / Qoil / etaoNN(Qoil, wjet0sol))
