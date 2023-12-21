@@ -59,5 +59,6 @@ QoilStart =  90 * 2.78 * 10 ** -13;
 QoilEnd   = 600 * 2.78 * 10 ** -13;
 QoilStep  = 100 * 2.78 * 10 ** -13;
 def lhs_rhs_diff(wjet0sol, Qoil):
-    return lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol)
-print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilStart,), bounds=Bounds(10 ** -5, 10 ** -4)))
+    return (lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol))**2
+print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilStart,), bounds=Bounds(10 ** -5, 10 ** -4)).x)
+print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilEnd,), bounds=Bounds(10 ** -5, 10 ** -4)).x)
