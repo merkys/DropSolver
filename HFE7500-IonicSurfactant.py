@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+from scipy.optimize import Bounds, minimize
+import numpy
+
 Kd = 0.001      # water viscosity, [Pa*s] *)
 Kvisc = 0.0014  # oil consistency index, [Pa*s^n] *)
 EtaZero = 0.0014
@@ -55,3 +58,6 @@ Qw        = 220 * 2.78 * 10 ** -13;
 QoilStart =  90 * 2.78 * 10 ** -13;
 QoilEnd   = 600 * 2.78 * 10 ** -13;
 QoilStep  = 100 * 2.78 * 10 ** -13;
+def lhs_rhs_diff(wjet0sol, Qoil):
+    return lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol)
+print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilStart,), bounds=Bounds(10 ** -5, 10 ** -4)))
