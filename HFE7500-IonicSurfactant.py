@@ -28,3 +28,18 @@ EpsilonHFE = 5.8
 F = 96400
 z = 1
 r0 = 0.2 * 10 ** -9 * 45 ** 0.6
+
+Tau0c = 0.0026
+def GammaDOTc(Qoil, wjet0sol):
+    return Qoil/H ** 2/wn - wjet0sol
+def etaoNN(Qoil, wjet0sol):
+    return EtaInf + (EtaZero - EtaInf)/(1 + (GammaDOTc(Qoil, wjet0sol)/77) ** n)
+# 0.03267+(0.02946-0.03267)/(1+(GammaDOTc(Qoil, wjet0sol)/99.7) ** n); M8410 Min.Oil Carreau-model
+# etaoNN=Tau0c/(GammaDOTc(Qoil,wjet0sol)+Kvisc*GammaDOTc(Qoil, wjet0sol) ** (n-1); M5904 Min.Oil HB-model
+
+def GammaDOTd(Qoil, wjet0sol):
+    return Qw / H ** 2 / wjet0sol
+# def etaw(wjet0sol, Qw, H, wn):
+#     return etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd(wjet0sol, Qw, H, wn)) ** p)/.etaINF→0.00532/.Kd→1.276/.B1→4.578;
+def etaw(Qoil, wjet0sol):
+    return Module( {etaINF1 = 0.001, B1 = 4.691}, etaINF1 + (Kd - etaINF1)/(1 + (B1 * GammaDOTd(Qoil, wjet0sol)) ** p) ) # FIXME: What is Module?
