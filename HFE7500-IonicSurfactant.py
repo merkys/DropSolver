@@ -122,3 +122,19 @@ print(Cbulk/CMC)
 print(Dmon.evalf())
 print(Dmic.evalf())
 print(Deff.evalf())
+
+## The bottom part I do not understand yet (A.M.)
+
+# In[86]:= (*Micelle kinetics and surfactant adsorption*)
+CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
+LambdaAgg = 0.5*(r0+r0*Nmon0**0.333)*(Dmon+Dmic)
+# (* Cmic is a function of variable Tdrop!*)
+CDECmic=Cmic(Tdrop)*(LambdaF+LambdaS)(*Tdrop*)/.LambdaF->10**6*(2/Nmon0)/.LambdaS->10**2*(Nmon0-2)/Nmon0 # (*/.LambdaS\[Rule]0.01*LambdaF*); # (*F\[Rule] Fast, S\[Rule]Slow *)
+CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
+
+CBmon=CMC(*Qoil*Tdrop*NA/.wjet0sol->sol1*);
+CRELmon=Module[{LambdaF=10^6*(2/Nmon0),LambdaS=10^2*(Nmon0-2)/Nmon0},Cmic[Tdrop]*(LambdaF+LambdaS)];
+CAGGmon=LambdaAgg*(Cmon[Tdrop])(*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*);
+
+def Pe(Qoil):
+    return (Qoil/H/wcont)*wout/Dmon
