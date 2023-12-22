@@ -133,8 +133,8 @@ CDECmic=Cmic(Tdrop)*(LambdaF+LambdaS)(*Tdrop*)/.LambdaF->10**6*(2/Nmon0)/.Lambda
 CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
 
 CBmon=CMC(*Qoil*Tdrop*NA/.wjet0sol->sol1*);
-CRELmon=Module[{LambdaF=10^6*(2/Nmon0),LambdaS=10^2*(Nmon0-2)/Nmon0},Cmic[Tdrop]*(LambdaF+LambdaS)];
-CAGGmon=LambdaAgg*(Cmon[Tdrop])(*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*);
+CRELmon=Module[{LambdaF=10^6*(2/Nmon0),LambdaS=10^2*(Nmon0-2)/Nmon0},Cmic[Tdrop]*(LambdaF+LambdaS)]
+CAGGmon=LambdaAgg*(Cmon(Tdrop)) # (*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*)
 
 def Pe(Qoil):
     return (Qoil/H/wcont)*wout/Dmon
