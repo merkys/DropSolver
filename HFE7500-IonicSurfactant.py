@@ -3,6 +3,7 @@
 from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize
 import numpy
+import sympy
 
 Kd = 0.001      # water viscosity, [Pa*s] *)
 Kvisc = 0.0014  # oil consistency index, [Pa*s^n] *)
@@ -97,3 +98,23 @@ def HF(Qoil):
 # In[76]:=
 print([dPO(QoilStart), dPW(QoilStart), HF(QoilStart)])
 # Out[76]= {2.21883,3.87416,1.04864}
+
+# Tdrop is simply global var, we don't need to pass it as function argument
+Tdrop = sympy.Symbol('Tdrop')
+Pi = sympy.pi
+
+# In[77]:=
+Ldrop = H+(Tdrop*Qw-Pi/6*H**3)/wout/H
+def L(Qoil):
+    return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop+Pi*H
+
+# In[79]:= L[QoilStart]
+# Out[79]= 0.000636683 +2 (1/12500+1250000000/11 (-(\[Pi]/11718750000000)+6.116*10^-11 Tdrop))
+
+# In[80]:=
+Cbulk=RhoO*omega/Ms
+print(Cbulk/CMC)
+# Nmon0 = Module[{K=(Cbulk/CMC)},Re[1+2*(K*(Cbulk-CMC))^0.5]]; # CHECK: What is Re()?
+Dmon = (R*T/NA)/(3*Pi*Kvisc*r0)
+Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**0.3333)
+Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
