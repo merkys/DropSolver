@@ -129,11 +129,13 @@ print(Deff.evalf())
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
 LambdaAgg = 0.5*(r0+r0*Nmon0**0.333)*(Dmon+Dmic)
 # (* Cmic is a function of variable Tdrop!*)
-CDECmic=Cmic(Tdrop)*(LambdaF+LambdaS)(*Tdrop*)/.LambdaF->10**6*(2/Nmon0)/.LambdaS->10**2*(Nmon0-2)/Nmon0 # (*/.LambdaS\[Rule]0.01*LambdaF*); # (*F\[Rule] Fast, S\[Rule]Slow *)
+Cmic = sympy.Function('Cmic')
+CDECmic = Cmic(Tdrop)*(LambdaF+LambdaS) # /.LambdaF->10**6*(2/Nmon0)/.LambdaS->10**2*(Nmon0-2)/Nmon0 # (*/.LambdaS\[Rule]0.01*LambdaF*); # (*F\[Rule] Fast, S\[Rule]Slow *)
+Cmon = sympy.Function('Cmon')
 CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
 
-CBmon=CMC(*Qoil*Tdrop*NA/.wjet0sol->sol1*);
-CRELmon=Module[{LambdaF=10^6*(2/Nmon0),LambdaS=10^2*(Nmon0-2)/Nmon0},Cmic[Tdrop]*(LambdaF+LambdaS)]
+CBmon = CMC # (*Qoil*Tdrop*NA/.wjet0sol->sol1*);
+CRELmon=Cmic(Tdrop)*(10**6*(2/Nmon0)+10**2*(Nmon0-2)/Nmon0)
 CAGGmon=LambdaAgg*(Cmon(Tdrop)) # (*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*)
 
 def Pe(Qoil):
