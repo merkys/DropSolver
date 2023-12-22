@@ -69,3 +69,31 @@ print(data_x)
 print(data_y)
 
 wjet0solF = interp1d(data_x, data_y, kind='quadratic')
+
+# Second step: with known wjet0solF[Qoil] function solve ....
+# In[69]:=
+def GammaDOTc(Qoil):
+    return (Qoil/H**2)/(wn - wjet0solF(Qoil))
+def etaoNN(Qoil):
+    return EtaInf + (EtaZero - EtaInf)/(1+(GammaDOTc(Qoil)/77)**n)
+def GammaDOTd(Qoil):
+    return (Qw/H**2)/wjet0solF(Qoil)
+# (*etaw[wjet0sol_,Qw_,H_,wn_]:=etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd[wjet0sol,Qw,H,wn])^p)/.etaINF\[Rule]0.00532/.Kd\[Rule]1.276/.B1\[Rule]4.578;*)
+def etaw(Qoil):
+    etaINF = 0.001
+    B1 = 4.691
+    return etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd(Qoil))**p)
+
+# In[73]:=
+def dPO(Qoil):
+    return abs(Qoil/H**3/wn*12*etaoNN(Qoil)*Ln/(1-0.63*Ln/wn))
+def dPW(Qoil):
+    return abs(Qw/H**3/wn*12*etaw(Qoil)*Ln/(1-0.63*Ln/wn))
+def HF(Qoil):
+    Y = 1*10**6
+    alfa = 0.7
+    return 1+(3/2*alfa*(dPO(Qoil)+dPW(Qoil))*wn/Y/H)**0.25
+
+# In[76]:=
+print([dPO(QoilStart), dPW(QoilStart), HF(QoilStart)])
+# Out[76]= {2.21883,3.87416,1.04864}
