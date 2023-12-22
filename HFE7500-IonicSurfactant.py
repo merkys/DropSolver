@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize
 import numpy
 
@@ -60,5 +61,11 @@ QoilEnd   = 600 * 2.78 * 10 ** -13;
 QoilStep  = 100 * 2.78 * 10 ** -13;
 def lhs_rhs_diff(wjet0sol, Qoil):
     return (lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol))**2
-print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilStart,), bounds=Bounds(10 ** -5, 10 ** -4)).x)
-print(minimize(lhs_rhs_diff, [10 ** -5], args=(QoilEnd,), bounds=Bounds(10 ** -5, 10 ** -4)).x)
+data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
+data_y = []
+for Qoil in data_x:
+    data_y.append(*list(minimize(lhs_rhs_diff, [10 ** -5], args=(Qoil,), bounds=Bounds(10 ** -5, 10 ** -4)).x))
+print(data_x)
+print(data_y)
+
+wjet0solF = interp1d(data_x, data_y, kind='quadratic')
