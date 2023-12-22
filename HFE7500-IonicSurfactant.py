@@ -113,8 +113,12 @@ def L(Qoil):
 
 # In[80]:=
 Cbulk=RhoO*omega/Ms
-print(Cbulk/CMC)
-# Nmon0 = Module[{K=(Cbulk/CMC)},Re[1+2*(K*(Cbulk-CMC))^0.5]]; # CHECK: What is Re()?
+Nmon0 = (1+2*((Cbulk/CMC)*(Cbulk-CMC))**0.5).real # CHECK: What is Re()?
 Dmon = (R*T/NA)/(3*Pi*Kvisc*r0)
 Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**0.3333)
 Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
+
+print(Cbulk/CMC)
+print(Dmon.evalf())
+print(Dmic.evalf())
+print(Deff.evalf())
