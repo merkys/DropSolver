@@ -2,6 +2,7 @@
 
 from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize
+from sympy import exp
 import numpy
 import sympy
 
@@ -147,3 +148,37 @@ Qoil = (50) * 2.78 * 10 ** -13
 eq = (sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * sympy.Derivative(Cmic(Tdrop), Tdrop), 0),
       sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * sympy.Derivative(Cmon(Tdrop), Tdrop), 0))
 ABC = sympy.dsolve(eq) # FIXME: Incorporate Cmon[0]==CMC, Cmic[0]==Cbulk-CMC
+
+# In[96]:=
+def CmonINT(Qoil):
+    return ABC[0].evalf()
+def CmicINT(Qoil):
+    return ABC[1].evalf()
+
+# In[98]:=
+Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
+Cfactor = exp(-z * Psi * (F / R / T))
+
+Kdes = 0.0002
+Kads = 1400
+TauI=(Kads*Cbulk**2+Kdes) ** -1
+def zz1(Qoil):
+    return Kads/Kdes*(Cfactor*CmonINT(Qoil))**2
+def zz2(Qoil):
+    return zz1(Qoil)/(1+zz1(Qoil))
+
+def DGamma(Qoil):
+    m = 0.06
+    Enth = 5.629
+    Kdes = 0.0002
+    Kads = 1400
+    # (* DGamma=Gamma(Tdrop)/GammaINF *)
+    return 1-exp(-(Tdrop/TauI)/(1+Pe(Qoil)))*zz1(Qoil) * exp(-Enth*zz2(Qoil)**m)/(1+zz1(Qoil)*exp(-Enth*zz2(Qoil)**m))
+# DGammaEl[Qoil_]:=27.72*0.138/1.138*(DGamma[Qoil])^1.138;
+# SIGMAel[Qoil_]:=4*R*T/F*(2*EpsilonHFE*(8.85*10^-11)*R*T*CmonINT[Qoil])^0.5*(1-Cosh[z*Psi*(F/R/T)])
+def SIGMAio(Qoil):
+    m = 0.06
+    Enth = 5.629
+    Kdes = 0.0002
+    Kads = 1400
+    return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
