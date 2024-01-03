@@ -130,13 +130,16 @@ CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
 LambdaAgg = 0.5*(r0+r0*Nmon0**0.333)*(Dmon+Dmic)
 # (* Cmic is a function of variable Tdrop!*)
 Cmic = sympy.Function('Cmic')
-CDECmic = Cmic(Tdrop)*(LambdaF+LambdaS) # /.LambdaF->10**6*(2/Nmon0)/.LambdaS->10**2*(Nmon0-2)/Nmon0 # (*/.LambdaS\[Rule]0.01*LambdaF*); # (*F\[Rule] Fast, S\[Rule]Slow *)
+# (*LambdaS->0.01*LambdaF*); # (*F->Fast, S->Slow *)
+LambdaF = 10 ** 6 * (2/Nmon0)
+LambdaS = 10 ** 2 * (Nmon0-2)/Nmon0
+CDECmic = Cmic(Tdrop)*(LambdaF+LambdaS)
 Cmon = sympy.Function('Cmon')
 CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
 
 CBmon = CMC # (*Qoil*Tdrop*NA/.wjet0sol->sol1*);
-CRELmon=Cmic(Tdrop)*(10**6*(2/Nmon0)+10**2*(Nmon0-2)/Nmon0)
-CAGGmon=LambdaAgg*(Cmon(Tdrop)) # (*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*)
+CRELmon=Cmic(Tdrop) * (LambdaF + LambdaS)
+CAGGmon=LambdaAgg * Cmon(Tdrop) # (*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*)
 
 def Pe(Qoil):
     return (Qoil/H/wcont)*wout/Dmon
