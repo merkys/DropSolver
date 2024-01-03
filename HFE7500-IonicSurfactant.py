@@ -144,4 +144,6 @@ def Pe(Qoil):
 
 # In[95]:=
 Qoil = (50) * 2.78 * 10 ** -13
-ABC = DSolveValue[{CBmic+CAGGmic-CDECmic-(1+Pe[Qoil])*Cmic'[Tdrop]==0 && CBmon+CRELmon-CAGGmon-(1+Pe[Qoil])*Cmon'[Tdrop]==0,Cmon[0]==CMC, Cmic[0]==Cbulk-CMC},{Cmon[Tdrop],Cmic[Tdrop]},Tdrop]
+eq = (sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * sympy.Derivative(Cmic(Tdrop), Tdrop), 0),
+      sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * sympy.Derivative(Cmon(Tdrop), Tdrop), 0))
+ABC = sympy.dsolve(eq) # FIXME: Incorporate Cmon[0]==CMC, Cmic[0]==Cbulk-CMC
