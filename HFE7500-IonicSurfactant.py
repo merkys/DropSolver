@@ -123,8 +123,6 @@ print(Dmon.evalf())
 print(Dmic.evalf())
 print(Deff.evalf())
 
-## The bottom part I do not understand yet (A.M.)
-
 # In[86]:= (*Micelle kinetics and surfactant adsorption*)
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
 LambdaAgg = 0.5*(r0+r0*Nmon0**0.333)*(Dmon+Dmic)
@@ -143,3 +141,7 @@ CAGGmon=LambdaAgg * Cmon(Tdrop) # (*Nmon*(1+LambdaAgg/Nmon0*Tdrop)*)
 
 def Pe(Qoil):
     return (Qoil/H/wcont)*wout/Dmon
+
+# In[95]:=
+Qoil = (50) * 2.78 * 10 ** -13
+ABC = DSolveValue[{CBmic+CAGGmic-CDECmic-(1+Pe[Qoil])*Cmic'[Tdrop]==0 && CBmon+CRELmon-CAGGmon-(1+Pe[Qoil])*Cmon'[Tdrop]==0,Cmon[0]==CMC, Cmic[0]==Cbulk-CMC},{Cmon[Tdrop],Cmic[Tdrop]},Tdrop]
