@@ -2,7 +2,7 @@
 
 from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize
-from sympy import exp
+from sympy import exp, log
 import numpy
 import sympy
 
@@ -151,9 +151,9 @@ ABC = sympy.dsolve(eq) # FIXME: Incorporate Cmon[0]==CMC, Cmic[0]==Cbulk-CMC
 
 # In[96]:=
 def CmonINT(Qoil):
-    return ABC[0].evalf()
+    return ABC[0].evalf(Qoil)
 def CmicINT(Qoil):
-    return ABC[1].evalf()
+    return ABC[1].evalf(Qoil)
 
 # In[98]:=
 Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
@@ -182,3 +182,5 @@ def SIGMAio(Qoil):
     Kdes = 0.0002
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
+
+print(SIGMAio(0.005))
