@@ -109,7 +109,8 @@ Ldrop = H+(Tdrop*Qw-Pi/6*H**3)/wout/H
 def L(Qoil):
     return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop+Pi*H
 
-# In[79]:= L[QoilStart]
+# In[79]:=
+print(L(QoilStart))
 # Out[79]= 0.000636683 +2 (1/12500+1250000000/11 (-(\[Pi]/11718750000000)+6.116*10^-11 Tdrop))
 
 # In[80]:=
@@ -183,4 +184,4 @@ def SIGMAio(Qoil):
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
 
-print(SIGMAio(0.005))
+print(type(SIGMAio(QoilStart).evalf(subs = {'Tdrop': 0.001})))
