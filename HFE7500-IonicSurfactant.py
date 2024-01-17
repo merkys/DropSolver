@@ -148,7 +148,7 @@ def Pe(Qoil):
 Qoil = (50) * 2.78 * 10 ** -13
 eq = (sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * sympy.Derivative(Cmic(Tdrop), Tdrop), 0),
       sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * sympy.Derivative(Cmon(Tdrop), Tdrop), 0))
-ABC = sympy.dsolve(eq, (Cmon(Tdrop), Cmic(Tdrop))) # FIXME: Incorporate Cmon[0]==CMC, Cmic[0]==Cbulk-CMC
+ABC = sympy.dsolve(eq, (Cmon(Tdrop), Cmic(Tdrop)), ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
 
 # In[96]:=
 def CmonINT(Qoil):
@@ -184,4 +184,4 @@ def SIGMAio(Qoil):
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
 
-print(type(SIGMAio(QoilStart).evalf(subs = {'Tdrop': 0.001})))
+print(SIGMAio(QoilStart).evalf(subs = {'Tdrop': 0.001}))
