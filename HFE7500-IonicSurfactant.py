@@ -146,15 +146,15 @@ def Pe(Qoil):
 
 # In[95]:=
 Qoil = (50) * 2.78 * 10 ** -13
-eq = (sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * sympy.Derivative(Cmic(Tdrop), Tdrop), 0),
-      sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * sympy.Derivative(Cmon(Tdrop), Tdrop), 0))
-ABC = sympy.dsolve(eq, (Cmon(Tdrop), Cmic(Tdrop)), ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
+eq = [sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * Cmic(Tdrop).diff(Tdrop), 0),
+      sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * Cmon(Tdrop).diff(Tdrop), 0)]
+ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
 
 # In[96]:=
 def CmonINT(Qoil):
-    return ABC[0].evalf(subs = {'Tdrop': Qoil})
+    return ABC[0].evalf(subs = {Tdrop: Qoil})
 def CmicINT(Qoil):
-    return ABC[1].evalf(subs = {'Tdrop': Qoil})
+    return ABC[1].evalf(subs = {Tdrop: Qoil})
 
 # In[98]:=
 Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
@@ -184,4 +184,4 @@ def SIGMAio(Qoil):
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
 
-print(SIGMAio(QoilStart).evalf(subs = {'Tdrop': 0.001}))
+print(SIGMAio(QoilStart).evalf(subs = {Tdrop: 0.001}))
