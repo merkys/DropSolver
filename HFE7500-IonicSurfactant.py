@@ -183,3 +183,71 @@ def SIGMAio(Qoil):
     Kdes = 0.0002
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
+
+# In[109]:= (* Capillary force at the interface *)
+def Pup(Qoil):
+    return SIGMAio(Qoil)*(1/wdisp+1/H) # (* Acting upwards the outlet *)
+def Pdown(Qoil):
+    return SIGMAio(Qoil)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
+def FgammaIO(Qoil):
+    m = 0.06
+    Enth = 5.629
+    Kdes = 0.0002
+    Kads = 1400
+    return -(SIGMAio(Qoil)/wdisp)*H*wdisp
+
+# (* The sum of two *)
+
+# In[112]:=
+def Uc(Qoil):
+    return ((Qoil/H)/HF(Qoil))/(wn-wjet0solF(Qoil))
+def Ud(Qoil):
+    return (Qw/H)/HF(Qoil)/wjet0solF(Qoil)
+def CaNC(Qoil):
+    return (etaoNN(Qoil)*Uc(Qoil))/SIGMAio(Qoil) # (*(Qw/Qoil)^0.333*)
+def CaND(Qoil):
+    return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil)*(Qoil/Qw) ** 1/3
+def Ljet(Qoil):
+    return (etaw(Qoil)/SIGMAio(Qoil))*(8/Pi/H/(CaNC(Qoil)+CaND(Qoil)))*(Qw*Qoil/2) ** 0.5
+# (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
+
+# In[117]:=
+def De(Qoil):
+    LambdaP = 0.0005
+    return LambdaP*Uc(Qoil)/H # (* Deborah number *)(*Dex500K\[Rule] 10%\[Rule]1.4ms*)
+def Wi(Qoil):
+    LambdaP1 = 0
+    return LambdaP1*(Qoil/H ** 2)/wcont # (* Weissenberg number\[Rule] Lambda*Urotat/H!!! *)
+def del(Qoil):
+    beta = etaw(Qoil)/(etaw(Qoil)+0.001)
+    return -(1-beta)*(258+143*(1-beta))/25025*De(Qoil) ** 2
+def Drel(Qoil):
+    beta = etaw(Qoil)/(etaw(Qoil)+0.001)
+    return -Wi(Qoil) ** 2 * (141-11*(1-beta))/1155
+# (*etaw/(etaw+2)/.wjet0sol->sol1*)
+
+def We(Qoil):
+    return RhoO*Uc(Qoil) ** 2 * (1+1/CaND(Qoil) ** (1/3)) ** 2 * (wout*CaNC(Qoil) ** (2/3)) ** 2/SIGMAio(Qoil) # (*Weber number*)
+
+# In[122]:= (* LOSS OF ENERGY/FORCE AS A RESULT OF VISCOSITY\[Equal]> DRAG COEFFICIENT; Dv=8*pi/(Re*Log[7.4/Re])?????  *)
+
+# (*Drag coefficient & DISSIPATION *)
+# (*Reyn[Qoil_]:=RhoW*(Qoil/H/wcont)*wn/etaoNN[Qoil]*)
+def Reyn(Qoil):
+    return RhoW*(Qoil/H/wcont)*wn/etaoNN(Qoil)
+def xi(Qoil):
+    z = 2.346*n / (2.423*n+0.918)
+    # (*2^(2*v+1)*(v+2)*)
+    return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z # (*+del[Qoil]+Drel*)
+
+def CAF(Qoil):
+    Phi = Qw/Qoil
+    Lambda = Kd/etaoNN(Qoil)
+    return 0.7 * (CaNC(Qoil) ** (2/3)/CaND(Qoil) ** (2/3)/(1+3.35 * CaNC(Qoil) ** (2/3))) * (1+CaND(Qoil)**(1/3)) ** 2
+
+def VcontSq(Qoil):
+    return ((Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2) * (Ljet(Qoil)+Ldrop)/(Ln+Ljet(Qoil))
+
+def Ffrict(Qoil):
+    z = 2.346*n/(2.423*n+0.918)
+    return CAF(Qoil) * xi(Qoil) * etaoNN(Qoil) * Tdrop * (VcontSq(Qoil)) * (Ln/wn) ** 2.25
