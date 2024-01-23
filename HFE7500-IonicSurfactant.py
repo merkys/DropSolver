@@ -152,9 +152,9 @@ ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): C
 
 # In[96]:=
 def CmonINT(Qoil):
-    return ABC[0].evalf(subs = {Tdrop: Qoil})
+    return ABC[0].evalf() # Return values do not seem to depend on Qoil
 def CmicINT(Qoil):
-    return ABC[1].evalf(subs = {Tdrop: Qoil})
+    return ABC[1].evalf() # Return values do not seem to depend on Qoil
 
 # In[98]:=
 Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
