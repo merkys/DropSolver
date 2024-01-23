@@ -218,7 +218,7 @@ def De(Qoil):
 def Wi(Qoil):
     LambdaP1 = 0
     return LambdaP1*(Qoil/H ** 2)/wcont # (* Weissenberg number\[Rule] Lambda*Urotat/H!!! *)
-def del(Qoil):
+def Del(Qoil):
     beta = etaw(Qoil)/(etaw(Qoil)+0.001)
     return -(1-beta)*(258+143*(1-beta))/25025*De(Qoil) ** 2
 def Drel(Qoil):
@@ -238,7 +238,7 @@ def Reyn(Qoil):
 def xi(Qoil):
     z = 2.346*n / (2.423*n+0.918)
     # (*2^(2*v+1)*(v+2)*)
-    return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z # (*+del[Qoil]+Drel*)
+    return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z) # (*+Del(Qoil)+Drel*)
 
 def CAF(Qoil):
     Phi = Qw/Qoil
