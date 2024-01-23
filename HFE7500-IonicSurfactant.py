@@ -152,9 +152,9 @@ ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): C
 
 # In[96]:=
 def CmonINT(Qoil):
-    return ABC[0].evalf() # Return values do not seem to depend on Qoil
+    return ABC[0].rhs.evalf() # Return values do not seem to depend on Qoil
 def CmicINT(Qoil):
-    return ABC[1].evalf() # Return values do not seem to depend on Qoil
+    return ABC[1].rhs.evalf() # Return values do not seem to depend on Qoil
 
 # In[98]:=
 Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
@@ -183,5 +183,3 @@ def SIGMAio(Qoil):
     Kdes = 0.0002
     Kads = 1400
     return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
-
-print(SIGMAio(QoilStart).evalf(subs = {Tdrop: 0.001}))
