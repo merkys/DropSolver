@@ -273,12 +273,11 @@ def RHS(Qoil):
 
 # In[151]:= data22=Table[{Qoil,(Tdrop/.FindRoot[LHS[Qoil]-RHS[Qoil]==0,{Tdrop,10^-4,0.06}])},{Qoil,QoilStart,QoilEnd,QoilStep}]
 def LHS_RHS_diff(Tdrop_sol, Qoil):
-    print(LHS(Qoil))
     return (LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}))**2
 data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
-    data22_y.append(*list(minimize(LHS_RHS_diff, [10 ** -5], args=(Qoil,), bounds=Bounds(10 ** -4, 0.06)).x))
+    data22_y.append(*list(minimize(LHS_RHS_diff, [10 ** -4], args=(Qoil,), bounds=Bounds(10 ** -4, 0.06)).x))
 print(data22_x)
 print(data22_y)
 
