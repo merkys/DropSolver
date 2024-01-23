@@ -57,6 +57,7 @@ def lhs(Qoil, wjet0sol):
 def rhs(Qoil, wjet0sol):
     return wn * (etaw(Qoil, wjet0sol) * Qw / Qoil / etaoNN(Qoil, wjet0sol))
 
+# In[62]:=
 Qw        = 220 * 2.78 * 10 ** -13;
 QoilStart =  90 * 2.78 * 10 ** -13;
 QoilEnd   = 600 * 2.78 * 10 ** -13;
@@ -251,3 +252,34 @@ def VcontSq(Qoil):
 def Ffrict(Qoil):
     z = 2.346*n/(2.423*n+0.918)
     return CAF(Qoil) * xi(Qoil) * etaoNN(Qoil) * Tdrop * (VcontSq(Qoil)) * (Ln/wn) ** 2.25
+
+# In[128]:= (* SHEAR FORCE-RELATED TERM *)
+def Fshear(Qoil):
+    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 2) * (2*Ljet(Qoil)+L(Qoil))
+# (*Plot[Fshear[Qw,Kvisc,Qoil, etaw, wn, Ln,H,wcont,wdisp,n,Tdrop],{Tdrop,10^-6,0.001}]*)
+
+# In[129]:= (* RESISTANCE TO OIL FLOW *)
+def Fresist(Qoil):
+    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 3) * (2*Ljet(Qoil)+L(Qoil)) ** 2
+# (*Plot[Fresist[Qw, etaw,Kvisc, Qoil, wn, Ln,H, wcont,wdisp,n,Tdrop],{Tdrop,10^-6,0.001}]*)
+
+# In[134]:=
+def LHS(Qoil):
+    return Fshear(Qoil) + Fresist(Qoil) - Ffrict(Qoil)
+def RHS(Qoil):
+    return FgammaIO(Qoil)
+
+# (* TOLIAU JAU SEKA SPRENDIMAS Tdrop VERTĖMS RASTI SU GAUTOMIS wjet0sol (ir Qoil) VERTĖMIS; FindRoot[LHS-RHS\[Equal]0,{Tdrop,10^-4,0.04}] *)
+
+# In[151]:= data22=Table[{Qoil,(Tdrop/.FindRoot[LHS[Qoil]-RHS[Qoil]==0,{Tdrop,10^-4,0.06}])},{Qoil,QoilStart,QoilEnd,QoilStep}]
+def LHS_RHS_diff(Tdrop_sol, Qoil):
+    print(LHS(Qoil))
+    return (LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}))**2
+data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
+data22_y = []
+for Qoil in data22_x:
+    data22_y.append(*list(minimize(LHS_RHS_diff, [10 ** -5], args=(Qoil,), bounds=Bounds(10 ** -4, 0.06)).x))
+print(data22_x)
+print(data22_y)
+
+# Out[151]= {{2.502*10^-11,0.0654544},{5.282*10^-11,0.0605741},{8.062*10^-11,0.0558101},{1.0842*10^-10,0.0516185},{1.3622*10^-10,0.0480788},{1.6402*10^-10,0.0450973}}
