@@ -118,7 +118,7 @@ print(L(QoilStart))
 Cbulk=RhoO*omega/Ms
 Nmon0 = (1+2*((Cbulk/CMC)*(Cbulk-CMC))**0.5).real # CHECK: What is Re()?
 Dmon = (R*T/NA)/(3*Pi*Kvisc*r0)
-Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**0.3333)
+Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**(1/3))
 Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
 
 print(Cbulk/CMC)
@@ -132,7 +132,7 @@ print(Deff.evalf())
 
 # In[86]:= (*Micelle kinetics and surfactant adsorption*)
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
-LambdaAgg = 0.5*(r0+r0*Nmon0**0.333)*(Dmon+Dmic)
+LambdaAgg = 0.5*(r0+r0*Nmon0**(1/3))*(Dmon+Dmic)
 # (* Cmic is a function of variable Tdrop!*)
 Cmic = sympy.Function('Cmic')
 # (*LambdaS->0.01*LambdaF*); # (*F->Fast, S->Slow *)
@@ -212,7 +212,7 @@ def Ud(Qoil):
 def CaNC(Qoil):
     return (etaoNN(Qoil)*Uc(Qoil))/SIGMAio(Qoil) # (*(Qw/Qoil)^0.333*)
 def CaND(Qoil):
-    return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil)*(Qoil/Qw) ** 1/3
+    return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil)*(Qoil/Qw) ** (1/3)
 def Ljet(Qoil):
     return (etaw(Qoil)/SIGMAio(Qoil))*(8/Pi/H/(CaNC(Qoil)+CaND(Qoil)))*(Qw*Qoil/2) ** 0.5
 # (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
@@ -249,7 +249,7 @@ def xi(Qoil):
 def CAF(Qoil):
     Phi = Qw/Qoil
     Lambda = Kd/etaoNN(Qoil)
-    return 0.7 * (CaNC(Qoil) ** (2/3)/CaND(Qoil) ** (2/3)/(1+3.35 * CaNC(Qoil) ** (2/3))) * (1+CaND(Qoil)**(1/3)) ** 2
+    return 0.7 * (CaNC(Qoil) ** (2/3)/CaND(Qoil) ** (2/3)/(1+3.35 * CaNC(Qoil) ** (2/3))) * (1+CaND(Qoil) ** (1/3)) ** 2
 
 def VcontSq(Qoil):
     return ((Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2) * (Ljet(Qoil)+Ldrop)/(Ln+Ljet(Qoil))
