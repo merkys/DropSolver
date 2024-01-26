@@ -125,6 +125,10 @@ print(Cbulk/CMC)
 print(Dmon.evalf())
 print(Dmic.evalf())
 print(Deff.evalf())
+# Out[81]= 10.0875
+# Out[83]= 1.56138*10^-10
+# Out[84]= 7.85654*10^-11
+# Out[85]= 8.62553*10^-11
 
 # In[86]:= (*Micelle kinetics and surfactant adsorption*)
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
@@ -150,12 +154,13 @@ Qoil = (50) * 2.78 * 10 ** -13
 eq = [sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * Cmic(Tdrop).diff(Tdrop), 0),
       sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * Cmon(Tdrop).diff(Tdrop), 0)]
 ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
+ABC = [ABC[0].rhs.evalf(), ABC[1].rhs.evalf()]
 
 # In[96]:=
 def CmonINT(Qoil):
-    return ABC[0].rhs.evalf() # Return values do not seem to depend on Qoil
+    return ABC[0] # Return values do not seem to depend on Qoil
 def CmicINT(Qoil):
-    return ABC[1].rhs.evalf() # Return values do not seem to depend on Qoil
+    return ABC[1] # Return values do not seem to depend on Qoil
 
 # In[98]:=
 Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
@@ -273,7 +278,7 @@ def RHS(Qoil):
 
 # In[151]:= data22=Table[{Qoil,(Tdrop/.FindRoot[LHS[Qoil]-RHS[Qoil]==0,{Tdrop,10^-4,0.06}])},{Qoil,QoilStart,QoilEnd,QoilStep}]
 def LHS_RHS_diff(Tdrop_sol, Qoil):
-    return (LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}))**2
+    return (LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol[0]}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol[0]}))**2
 data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
