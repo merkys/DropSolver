@@ -43,6 +43,7 @@ def etaoNN(Qoil, wjet0sol):
 # 0.03267+(0.02946-0.03267)/(1+(GammaDOTc(Qoil, wjet0sol)/99.7) ** n); M8410 Min.Oil Carreau-model
 # etaoNN=Tau0c/(GammaDOTc(Qoil,wjet0sol)+Kvisc*GammaDOTc(Qoil, wjet0sol) ** (n-1); M5904 Min.Oil HB-model
 
+# In[55]:=
 def GammaDOTd(Qoil, wjet0sol):
     return Qw / H ** 2 / wjet0sol
 # def etaw(wjet0sol, Qw, H, wn):
@@ -58,10 +59,10 @@ def rhs(Qoil, wjet0sol):
     return wn * (etaw(Qoil, wjet0sol) * Qw / Qoil / etaoNN(Qoil, wjet0sol))
 
 # In[62]:=
-Qw        = 220 * 2.78 * 10 ** -13;
-QoilStart =  90 * 2.78 * 10 ** -13;
-QoilEnd   = 600 * 2.78 * 10 ** -13;
-QoilStep  = 100 * 2.78 * 10 ** -13;
+Qw        = 220 * 2.78 * 10 ** -13
+QoilStart =  90 * 2.78 * 10 ** -13
+QoilEnd   = 600 * 2.78 * 10 ** -13
+QoilStep  = 100 * 2.78 * 10 ** -13
 def lhs_rhs_diff(wjet0sol, Qoil):
     return (lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol))**2
 data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
