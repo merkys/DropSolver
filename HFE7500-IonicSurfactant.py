@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from scipy.interpolate import interp1d
-from scipy.optimize import Bounds, minimize
+from scipy.optimize import Bounds, minimize, newton
 from sympy import exp, log
 import numpy
 import sympy
@@ -277,14 +277,21 @@ def RHS(Qoil):
 
 # (* TOLIAU JAU SEKA SPRENDIMAS Tdrop VERTĖMS RASTI SU GAUTOMIS wjet0sol (ir Qoil) VERTĖMIS; FindRoot[LHS-RHS\[Equal]0,{Tdrop,10^-4,0.04}] *)
 
-# In[151]:= data22=Table[{Qoil,(Tdrop/.FindRoot[LHS[Qoil]-RHS[Qoil]==0,{Tdrop,10^-4,0.06}])},{Qoil,QoilStart,QoilEnd,QoilStep}]
+# In[407]:= (* "FindRoot" ribos- apatinė ir viršutinė, kad nereiktų įvedinėti atsitiktinių skaičių *)
+LIM1 = (QoilStart / QoilEnd) * (etaw(QoilStart) * Ud(QoilStart)/sigmaEQ) ** (1/3)
+LIM2 = (etaw(QoilStart) * Ud(QoilStart)/sigmaEQ) ** (1/3)
+
+# Out[407]= 0.0102476
+# Out[408]= 0.0683174
+print(LIM1)
+print(LIM2)
+
+# In[409]:=
 def LHS_RHS_diff(Tdrop_sol, Qoil):
-    return (LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol[0]}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol[0]}))**2
+    return float(LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}))
 data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
-    data22_y.append(*list(minimize(LHS_RHS_diff, [10 ** -4], args=(Qoil,), bounds=Bounds(10 ** -4, 0.06)).x))
-print(data22_x)
+    data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+print(data22_x / (2.78 * 10 ** -13))
 print(data22_y)
-
-# Out[151]= {{2.502*10^-11,0.0654544},{5.282*10^-11,0.0605741},{8.062*10^-11,0.0558101},{1.0842*10^-10,0.0516185},{1.3622*10^-10,0.0480788},{1.6402*10^-10,0.0450973}}
