@@ -6,6 +6,9 @@ from sympy import exp, log
 import numpy
 import sympy
 
+debug = True
+
+# In[35]:=
 Kd = 0.001      # water viscosity, [Pa*s] *)
 Kvisc = 0.0014  # oil consistency index, [Pa*s^n] *)
 EtaZero = 0.0014
@@ -69,8 +72,9 @@ data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data_y = []
 for Qoil in data_x:
     data_y.append(*list(minimize(lhs_rhs_diff, [10 ** -5], args=(Qoil,), bounds=Bounds(10 ** -5, 10 ** -4)).x))
-print(data_x)
-print(data_y)
+if debug:
+    print(data_x)
+    print(data_y)
 
 wjet0solF = interp1d(data_x, data_y, kind='quadratic')
 
@@ -99,7 +103,8 @@ def HF(Qoil):
     return 1+(3/2*alfa*(dPO(Qoil)+dPW(Qoil))*wn/Y/H)**0.25
 
 # In[76]:=
-print([dPO(QoilStart), dPW(QoilStart), HF(QoilStart)])
+if debug:
+    print([dPO(QoilStart), dPW(QoilStart), HF(QoilStart)])
 # Out[76]= {2.21883,3.87416,1.04864}
 
 # Tdrop is simply global var, we don't need to pass it as function argument
@@ -112,7 +117,8 @@ def L(Qoil):
     return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop+Pi*H
 
 # In[79]:=
-print(L(QoilStart))
+if debug:
+    print(L(QoilStart))
 # Out[79]= 0.000636683 +2 (1/12500+1250000000/11 (-(\[Pi]/11718750000000)+6.116*10^-11 Tdrop))
 
 # In[80]:=
@@ -122,10 +128,11 @@ Dmon = (R*T/NA)/(3*Pi*Kvisc*r0)
 Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**(1/3))
 Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
 
-print(Cbulk/CMC)
-print(Dmon.evalf())
-print(Dmic.evalf())
-print(Deff.evalf())
+if debug:
+    print(Cbulk/CMC)
+    print(Dmon.evalf())
+    print(Dmic.evalf())
+    print(Deff.evalf())
 # Out[81]= 10.0875
 # Out[83]= 1.56138*10^-10
 # Out[84]= 7.85654*10^-11
@@ -283,8 +290,9 @@ LIM2 = (etaw(QoilStart) * Ud(QoilStart)/sigmaEQ) ** (1/3)
 
 # Out[407]= 0.0102476
 # Out[408]= 0.0683174
-print(LIM1)
-print(LIM2)
+if debug:
+    print(LIM1)
+    print(LIM2)
 
 # In[409]:=
 def LHS_RHS_diff(Tdrop_sol, Qoil):
@@ -294,18 +302,21 @@ data22_y = []
 for Qoil in data22_x:
     data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
 data22_y = numpy.array(data22_y)
-print(data22_x)
-print(data22_y)
+if debug:
+    print(data22_x)
+    print(data22_y)
 
 # In[137]:=
 # Out[137]= 0.034013
-print(SIGMAio(QoilStart).evalf(subs={Tdrop: 0.0627}))
+if debug:
+    print(SIGMAio(QoilStart).evalf(subs={Tdrop: 0.0627}))
 
 # In[153]:=
 data2_x = data22_x / (2.78 * 10 ** -13)
 data2_y = Qw/(10 ** -15) * data22_y
-print(data2_x)
-print(data2_y)
+if debug:
+    print(data2_x)
+    print(data2_y)
 # Out[153]= {{90.,4003.19},{190.,3704.71},{290.,3413.34},{390.,3156.99},{490.,2940.5},{590.,2758.15}}
 
 # In[139]:=
