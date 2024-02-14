@@ -293,5 +293,20 @@ data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
     data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
-print(data22_x / (2.78 * 10 ** -13))
+print(data22_x)
 print(data22_y)
+
+# In[137]:=
+# Out[137]= 0.034013
+print(SIGMAio(QoilStart).evalf(subs={Tdrop: 0.0627}))
+
+# In[153]:=
+data2_x = data22_x / (2.78 * 10 ** -13)
+data2_y = Qw/(10 ** -15) * data22_y
+print(data2_x)
+print(data2_y)
+# Out[153]= {{90.,4003.19},{190.,3704.71},{290.,3413.34},{390.,3156.99},{490.,2940.5},{590.,2758.15}}
+
+# In[142]:=
+def Vd(Qoil):
+    return wn**3 / 0.7*(wn/Ln)**2.5*(etaw(Qoil,wjet0sol)*Qw/wdisp/etaoNN(Qoil,wjet0sol)/Qoil*wcont)**(2/3)/(1+(etaw(Qoil,wjet0sol)*Qw/wdisp/H/sigmaEQ)**(1/3))**2
