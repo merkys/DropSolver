@@ -308,6 +308,9 @@ print(data2_x)
 print(data2_y)
 # Out[153]= {{90.,4003.19},{190.,3704.71},{290.,3413.34},{390.,3156.99},{490.,2940.5},{590.,2758.15}}
 
+# In[139]:=
+numpy.savetxt( '/dev/stdout', numpy.transpose(numpy.vstack((data2_x, data2_y))), delimiter="\t" )
+
 # In[142]:=
 def Vd(Qoil):
     return wn**3 / 0.7*(wn/Ln)**2.5*(etaw(Qoil,wjet0sol)*Qw/wdisp/etaoNN(Qoil,wjet0sol)/Qoil*wcont)**(2/3)/(1+(etaw(Qoil,wjet0sol)*Qw/wdisp/H/sigmaEQ)**(1/3))**2
