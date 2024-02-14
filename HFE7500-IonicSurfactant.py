@@ -2,10 +2,9 @@
 
 from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize, newton
-from sympy import exp, log
 import numpy
 import sympy
-from sympy import Symbol
+from sympy import Eq, Function, Symbol, dsolve, exp, log
 
 debug = True
 
@@ -144,12 +143,12 @@ if debug:
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
 LambdaAgg = 0.5*(r0+r0*Nmon0**(1/3))*(Dmon+Dmic)
 # (* Cmic is a function of variable Tdrop!*)
-Cmic = sympy.Function('Cmic')
+Cmic = Function('Cmic')
 # (*LambdaS->0.01*LambdaF*); # (*F->Fast, S->Slow *)
 LambdaF = 10 ** 6 * (2/Nmon0)
 LambdaS = 10 ** 2 * (Nmon0-2)/Nmon0
 CDECmic = Cmic(Tdrop)*(LambdaF+LambdaS)
-Cmon = sympy.Function('Cmon')
+Cmon = Function('Cmon')
 CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
 
 CBmon = CMC # (*Qoil*Tdrop*NA/.wjet0sol->sol1*);
@@ -161,9 +160,9 @@ def Pe(Qoil):
 
 # In[95]:=
 Qoil = (50) * 2.78 * 10 ** -13
-eq = [sympy.Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * Cmic(Tdrop).diff(Tdrop), 0),
-      sympy.Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * Cmon(Tdrop).diff(Tdrop), 0)]
-ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
+eq = [Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * Cmic(Tdrop).diff(Tdrop), 0),
+      Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * Cmon(Tdrop).diff(Tdrop), 0)]
+ABC = dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
 ABC = [ABC[0].rhs.evalf(), ABC[1].rhs.evalf()]
 
 # In[96]:=
@@ -311,7 +310,6 @@ data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
     data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
-    print(data22_y)
 data22_y = numpy.array(data22_y)
 if debug:
     print(data22_x)
