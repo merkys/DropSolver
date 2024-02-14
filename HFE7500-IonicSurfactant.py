@@ -5,6 +5,7 @@ from scipy.optimize import Bounds, minimize, newton
 from sympy import exp, log
 import numpy
 import sympy
+from sympy import Symbol
 
 debug = True
 
@@ -112,9 +113,10 @@ Tdrop = sympy.Symbol('Tdrop')
 Pi = sympy.pi
 
 # In[77]:=
-Ldrop = H+(Tdrop*Qw-Pi/6*H**3)/wout/H
-def L(Qoil):
-    return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop+Pi*H
+def Ldrop(Tdrop=Tdrop):
+    return H+(Tdrop*Qw-Pi/6*H**3)/wout/H
+def L(Qoil, Tdrop=Tdrop):
+    return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop(Tdrop)+Pi*H
 
 # In[79]:=
 if debug:
@@ -165,50 +167,58 @@ ABC = sympy.dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): C
 ABC = [ABC[0].rhs.evalf(), ABC[1].rhs.evalf()]
 
 # In[96]:=
-def CmonINT(Qoil):
-    return ABC[0] # Return values do not seem to depend on Qoil
-def CmicINT(Qoil):
-    return ABC[1] # Return values do not seem to depend on Qoil
+def CmonINT(Qoil, Tdrop=Tdrop): # Return values do not seem to depend on Qoil
+    if isinstance(Tdrop, Symbol):
+        return ABC[0]
+    else:
+        return ABC[0].evalf(subs={'Tdrop': Tdrop})
+def CmicINT(Qoil, Tdrop=Tdrop): # Return values do not seem to depend on Qoil
+    if isinstance(Tdrop, Symbol):
+        return ABC[1]
+    else:
+        return ABC[1].evalf(subs={'Tdrop': Tdrop})
 
 # In[98]:=
-Psi = (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
-Cfactor = exp(-z * Psi * (F / R / T))
+def Psi(Tdrop=Tdrop):
+    return (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
+def Cfactor(Tdrop=Tdrop):
+    return exp(-z * Psi(Tdrop) * (F / R / T))
 
 Kdes = 0.0002
 Kads = 1400
 TauI=(Kads*Cbulk**2+Kdes) ** -1
-def zz1(Qoil):
-    return Kads/Kdes*(Cfactor*CmonINT(Qoil))**2
-def zz2(Qoil):
-    return zz1(Qoil)/(1+zz1(Qoil))
+def zz1(Qoil, Tdrop=Tdrop):
+    return Kads/Kdes*(Cfactor(Tdrop)*CmonINT(Qoil, Tdrop))**2
+def zz2(Qoil, Tdrop=Tdrop):
+    return zz1(Qoil, Tdrop)/(1+zz1(Qoil, Tdrop))
 
-def DGamma(Qoil):
+def DGamma(Qoil, Tdrop=Tdrop):
     m = 0.06
     Enth = 5.629
     Kdes = 0.0002
     Kads = 1400
     # (* DGamma=Gamma(Tdrop)/GammaINF *)
-    return 1-exp(-(Tdrop/TauI)/(1+Pe(Qoil)))*zz1(Qoil) * exp(-Enth*zz2(Qoil)**m)/(1+zz1(Qoil)*exp(-Enth*zz2(Qoil)**m))
+    return 1-exp(-(Tdrop/TauI)/(1+Pe(Qoil)))*zz1(Qoil, Tdrop) * exp(-Enth*zz2(Qoil, Tdrop)**m)/(1+zz1(Qoil, Tdrop)*exp(-Enth*zz2(Qoil, Tdrop)**m))
 # DGammaEl[Qoil_]:=27.72*0.138/1.138*(DGamma[Qoil])^1.138;
 # SIGMAel[Qoil_]:=4*R*T/F*(2*EpsilonHFE*(8.85*10^-11)*R*T*CmonINT[Qoil])^0.5*(1-Cosh[z*Psi*(F/R/T)])
-def SIGMAio(Qoil):
+def SIGMAio(Qoil, Tdrop=Tdrop):
     m = 0.06
     Enth = 5.629
     Kdes = 0.0002
     Kads = 1400
-    return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil))
+    return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil, Tdrop))
 
 # In[109]:= (* Capillary force at the interface *)
-def Pup(Qoil):
-    return SIGMAio(Qoil)*(1/wdisp+1/H) # (* Acting upwards the outlet *)
-def Pdown(Qoil):
-    return SIGMAio(Qoil)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
-def FgammaIO(Qoil):
+def Pup(Qoil, Tdrop=Tdrop):
+    return SIGMAio(Qoil, Tdrop)*(1/wdisp+1/H) # (* Acting upwards the outlet *)
+def Pdown(Qoil, Tdrop=Tdrop):
+    return SIGMAio(Qoil, Tdrop)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
+def FgammaIO(Qoil, Tdrop=Tdrop):
     m = 0.06
     Enth = 5.629
     Kdes = 0.0002
     Kads = 1400
-    return -(SIGMAio(Qoil)/wdisp)*H*wdisp
+    return -(SIGMAio(Qoil, Tdrop)/wdisp)*H*wdisp
 
 # (* The sum of two *)
 
@@ -217,12 +227,12 @@ def Uc(Qoil):
     return ((Qoil/H)/HF(Qoil))/(wn-wjet0solF(Qoil))
 def Ud(Qoil):
     return (Qw/H)/HF(Qoil)/wjet0solF(Qoil)
-def CaNC(Qoil):
-    return (etaoNN(Qoil)*Uc(Qoil))/SIGMAio(Qoil) # (*(Qw/Qoil)^0.333*)
-def CaND(Qoil):
-    return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil)*(Qoil/Qw) ** (1/3)
-def Ljet(Qoil):
-    return (etaw(Qoil)/SIGMAio(Qoil))*(8/Pi/H/(CaNC(Qoil)+CaND(Qoil)))*(Qw*Qoil/2) ** 0.5
+def CaNC(Qoil, Tdrop=Tdrop):
+    return (etaoNN(Qoil)*Uc(Qoil))/SIGMAio(Qoil, Tdrop) # (*(Qw/Qoil)^0.333*)
+def CaND(Qoil, Tdrop=Tdrop):
+    return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil, Tdrop)*(Qoil/Qw) ** (1/3)
+def Ljet(Qoil, Tdrop=Tdrop):
+    return (etaw(Qoil)/SIGMAio(Qoil, Tdrop))*(8/Pi/H/(CaNC(Qoil, Tdrop)+CaND(Qoil, Tdrop)))*(Qw*Qoil/2) ** 0.5
 # (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
 
 # In[117]:=
@@ -240,8 +250,8 @@ def Drel(Qoil):
     return -Wi(Qoil) ** 2 * (141-11*(1-beta))/1155
 # (*etaw/(etaw+2)/.wjet0sol->sol1*)
 
-def We(Qoil):
-    return RhoO*Uc(Qoil) ** 2 * (1+1/CaND(Qoil) ** (1/3)) ** 2 * (wout*CaNC(Qoil) ** (2/3)) ** 2/SIGMAio(Qoil) # (*Weber number*)
+def We(Qoil, Tdrop=Tdrop):
+    return RhoO*Uc(Qoil) ** 2 * (1+1/CaND(Qoil) ** (1/3)) ** 2 * (wout*CaNC(Qoil) ** (2/3)) ** 2/SIGMAio(Qoil, Tdrop) # (*Weber number*)
 
 # In[122]:= (* LOSS OF ENERGY/FORCE AS A RESULT OF VISCOSITY\[Equal]> DRAG COEFFICIENT; Dv=8*pi/(Re*Log[7.4/Re])?????  *)
 
@@ -254,33 +264,33 @@ def xi(Qoil):
     # (*2^(2*v+1)*(v+2)*)
     return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z) # (*+Del(Qoil)+Drel*)
 
-def CAF(Qoil):
+def CAF(Qoil, Tdrop=Tdrop):
     Phi = Qw/Qoil
     Lambda = Kd/etaoNN(Qoil)
-    return 0.7 * (CaNC(Qoil) ** (2/3)/CaND(Qoil) ** (2/3)/(1+3.35 * CaNC(Qoil) ** (2/3))) * (1+CaND(Qoil) ** (1/3)) ** 2
+    return 0.7 * (CaNC(Qoil, Tdrop) ** (2/3)/CaND(Qoil, Tdrop) ** (2/3)/(1+3.35 * CaNC(Qoil, Tdrop) ** (2/3))) * (1+CaND(Qoil, Tdrop) ** (1/3)) ** 2
 
-def VcontSq(Qoil):
-    return ((Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2) * (Ljet(Qoil)+Ldrop)/(Ln+Ljet(Qoil))
+def VcontSq(Qoil, Tdrop=Tdrop):
+    return ((Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2) * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
 
-def Ffrict(Qoil):
+def Ffrict(Qoil, Tdrop=Tdrop):
     z = 2.346*n/(2.423*n+0.918)
-    return CAF(Qoil) * xi(Qoil) * etaoNN(Qoil) * Tdrop * (VcontSq(Qoil)) * (Ln/wn) ** 2.25
+    return CAF(Qoil, Tdrop) * xi(Qoil) * etaoNN(Qoil) * Tdrop * (VcontSq(Qoil, Tdrop)) * (Ln/wn) ** 2.25
 
 # In[128]:= (* SHEAR FORCE-RELATED TERM *)
-def Fshear(Qoil):
-    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 2) * (2*Ljet(Qoil)+L(Qoil))
+def Fshear(Qoil, Tdrop=Tdrop):
+    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 2) * (2*Ljet(Qoil, Tdrop)+L(Qoil, Tdrop))
 # (*Plot[Fshear[Qw,Kvisc,Qoil, etaw, wn, Ln,H,wcont,wdisp,n,Tdrop],{Tdrop,10^-6,0.001}]*)
 
 # In[129]:= (* RESISTANCE TO OIL FLOW *)
-def Fresist(Qoil):
-    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 3) * (2*Ljet(Qoil)+L(Qoil)) ** 2
+def Fresist(Qoil, Tdrop=Tdrop):
+    return etaoNN(Qoil) * (Qoil/(wn-wjet0solF(Qoil)) ** 3) * (2*Ljet(Qoil, Tdrop)+L(Qoil, Tdrop)) ** 2
 # (*Plot[Fresist[Qw, etaw,Kvisc, Qoil, wn, Ln,H, wcont,wdisp,n,Tdrop],{Tdrop,10^-6,0.001}]*)
 
 # In[134]:=
-def LHS(Qoil):
-    return Fshear(Qoil) + Fresist(Qoil) - Ffrict(Qoil)
-def RHS(Qoil):
-    return FgammaIO(Qoil)
+def LHS(Qoil, Tdrop=Tdrop):
+    return Fshear(Qoil, Tdrop) + Fresist(Qoil, Tdrop) - Ffrict(Qoil, Tdrop)
+def RHS(Qoil, Tdrop=Tdrop):
+    return FgammaIO(Qoil, Tdrop)
 
 # (* TOLIAU JAU SEKA SPRENDIMAS Tdrop VERTĖMS RASTI SU GAUTOMIS wjet0sol (ir Qoil) VERTĖMIS; FindRoot[LHS-RHS\[Equal]0,{Tdrop,10^-4,0.04}] *)
 
@@ -296,11 +306,12 @@ if debug:
 
 # In[409]:=
 def LHS_RHS_diff(Tdrop_sol, Qoil):
-    return float(LHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}) - RHS(Qoil).evalf(subs={Tdrop: Tdrop_sol}))
+    return float(LHS(Qoil, Tdrop_sol).evalf() - RHS(Qoil, Tdrop_sol).evalf())
 data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
     data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+    print(data22_y)
 data22_y = numpy.array(data22_y)
 if debug:
     print(data22_x)
@@ -309,7 +320,7 @@ if debug:
 # In[137]:=
 # Out[137]= 0.034013
 if debug:
-    print(SIGMAio(QoilStart).evalf(subs={Tdrop: 0.0627}))
+    print(SIGMAio(QoilStart, 0.0627).evalf())
 
 # In[153]:=
 data2_x = data22_x / (2.78 * 10 ** -13)
