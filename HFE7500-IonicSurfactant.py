@@ -293,6 +293,7 @@ data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
 data22_y = []
 for Qoil in data22_x:
     data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+data22_y = numpy.array(data22_y)
 print(data22_x)
 print(data22_y)
 
