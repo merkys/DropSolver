@@ -109,7 +109,7 @@ if debug:
 # Out[76]= {2.21883,3.87416,1.04864}
 
 # Tdrop is simply global var, we don't need to pass it as function argument
-Tdrop = sympy.Symbol('Tdrop')
+Tdrop = Symbol('Tdrop')
 Pi = sympy.pi
 
 # In[77]:=
