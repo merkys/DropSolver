@@ -3,8 +3,7 @@
 from scipy.interpolate import interp1d
 from scipy.optimize import Bounds, minimize, newton
 import numpy
-import sympy
-from sympy import Eq, Function, Symbol, dsolve, exp, log
+from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
 debug = True
 
@@ -109,13 +108,12 @@ if debug:
 
 # Tdrop is simply global var, we don't need to pass it as function argument
 Tdrop = Symbol('Tdrop')
-Pi = sympy.pi
 
 # In[77]:=
 def Ldrop(Tdrop=Tdrop):
-    return H+(Tdrop*Qw-Pi/6*H**3)/wout/H
+    return H+(Tdrop*Qw-pi/6*H**3)/wout/H
 def L(Qoil, Tdrop=Tdrop):
-    return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop(Tdrop)+Pi*H
+    return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop(Tdrop)+pi*H
 
 # In[79]:=
 if debug:
@@ -125,8 +123,8 @@ if debug:
 # In[80]:=
 Cbulk=RhoO*omega/Ms
 Nmon0 = (1+2*((Cbulk/CMC)*(Cbulk-CMC))**0.5).real # CHECK: What is Re()?
-Dmon = (R*T/NA)/(3*Pi*Kvisc*r0)
-Dmic = (R*T/NA)/(3*Pi*Kvisc*r0*Nmon0**(1/3))
+Dmon = (R*T/NA)/(3*pi*Kvisc*r0)
+Dmic = (R*T/NA)/(3*pi*Kvisc*r0*Nmon0**(1/3))
 Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
 
 if debug:
@@ -179,7 +177,7 @@ def CmicINT(Qoil, Tdrop=Tdrop): # Return values do not seem to depend on Qoil
 
 # In[98]:=
 def Psi(Tdrop=Tdrop):
-    return (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (Pi * Dmon * Tdrop)**0.5
+    return (9 * 10 ** 9) / EpsilonHFE * (1.6 * 10 ** -19) / (pi * Dmon * Tdrop)**0.5
 def Cfactor(Tdrop=Tdrop):
     return exp(-z * Psi(Tdrop) * (F / R / T))
 
@@ -231,7 +229,7 @@ def CaNC(Qoil, Tdrop=Tdrop):
 def CaND(Qoil, Tdrop=Tdrop):
     return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil, Tdrop)*(Qoil/Qw) ** (1/3)
 def Ljet(Qoil, Tdrop=Tdrop):
-    return (etaw(Qoil)/SIGMAio(Qoil, Tdrop))*(8/Pi/H/(CaNC(Qoil, Tdrop)+CaND(Qoil, Tdrop)))*(Qw*Qoil/2) ** 0.5
+    return (etaw(Qoil)/SIGMAio(Qoil, Tdrop))*(8/pi/H/(CaNC(Qoil, Tdrop)+CaND(Qoil, Tdrop)))*(Qw*Qoil/2) ** 0.5
 # (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
 
 # In[117]:=
