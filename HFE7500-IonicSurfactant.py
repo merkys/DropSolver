@@ -43,6 +43,16 @@ m = 0.06
 Enth = 5.629
 CMC = 0.128             # Critical Micelle Concentration, [mol/m^3]; KrytoxFSH MW7500 CMC=0.128
 
+if not is_ionic:
+    omega = 0.01
+    Ms = 12.5
+    GAMMAinf = 3.4 * 10 ** -6
+    Kads = 18
+    Kdes = 0.006
+    m = 0
+    Enth = 0
+    CMC = 0.15
+
 # CONSTANTS
 RhoO = 1614             # Oil density [kg/m^3]
 RhoW = 1000             # Water density, [kg/m^3]
