@@ -8,43 +8,56 @@ from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 debug = True
 is_ionic = True
 
-# In[35]:=
-Kd = 0.001      # water viscosity, [Pa*s] *)
-Kvisc = 0.0014  # oil consistency index, [Pa*s^n] *)
-EtaZero = 0.0014
+# CHANGING PARAMETERS, SET BY USER
+
+# NON-NEWTONIAN VISCOSITY PARAMETERS
+Kd = 0.001          # disperse-phase consistency index, [Pa*s]
+etaINF1 = 0.001     # IF disperse-phase is Newtonian, Kd=etaINF1
+B1 = 4.691
+p = 1.0             # NONLINEARITY INDEX for dispersed phase
+Kvisc = 0.0014      # Oil viscosity index
+EtaZero = 0.0014    # IF continuous-phase (oil) is Newtonian, EtaZero=etaINF
 EtaInf = 0.0014
-wn = 7 * 10 ** -5   # width of the focussing nozzle, [m] *)(* 20/20/H11; 28x15.5/H17; 33/5/H18; 37.5/4.5/20; 10x17; 33.5x5//17; 37x4//H20*)
-Ln = 7 * 10 ** -5   # length of the focussing nozzle, [m] *)
-H = 8 * 10 ** -5    # Height of the chip, [m] *)
-sigmaEQ = (52) * 0.001  # surface tension of water/oil interface with no surfactant *)
-wcont = 6 * 10 ** -5    # Width of the Continuous-phase channel *)
-wdisp = 7 * 10 ** -5    # Width of the Dispersed-phase channel *)
-wout = 11 * 10 ** -5    # Width of the outlet channel *)
-RhoO = 1614     # Oil density [kg/m^3] *)
-RhoW = 1000     # Water density, [kg/m^3] *)
-Ms = 7.5    # Molar mass of surfactant [kg/mol] *)
-omega = 0.006   # surfactant fraction, USED IN OIL FOR EXPERIMENT, w/w *)
-NA = 6.023 * 10 ** 23 # Avogadro Number *)
-R = 8.314   # Universal gas-constant *)
-T = 293     # Absolute temperature, [K] *)
-GAMMAinf = 8 * 10 ** -6 # Surface excess of surfactant at complete-coverage of interface [mol/m^2] *)
-Kads = 1400
-Kdes = 0.0002
-CMC = 0.128     # Critical Micelle Concentration, [mol/m^3] *)
-n = 1.0     # NONLINEARITY INDEX for continuous phase*)
-p = 1.0     # NONLINEARITY INDEX for dispersed phase*)
-EpsilonHFE = 5.8
-F = 96400
+B2 = 77
+n = 1.0             # NONLINEARITY INDEX for continuous phase
+
+# CHIP GEOMETRIC PARAMETERS
+wn = 70 * 10 ** -6      # width of the focussing nozzle, [m]
+Ln = 60 * 10 ** -6      # length of the focussing nozzle, [m]
+H = 80 * 10 ** -6       # Height of the chip, [m]
+wcont = 70 * 10 ** -6   # Width of the Continuous-phase channel
+wdisp = 60 * 10 ** -6   # Width of the Dispersed-phase channel
+wout = 110 * 10 ** -6   # Width of the outlet channel
+
+omega = 0.006           # SURFACTANT CONCENTRATION wt% (dissolved in oil)
+
+# PARAMETERS SET BY THE CHOICE OF OIL/SURFACTANT TYPE; further not changed by user
+# SURFACTANT AND ADSORPTION PARAMETERS
+
+Ms = 7.5                # Molar mass of surfactant [kg/mol]
+sigmaEQ = (52) * 0.001  # surface tension of water/oil interface with no surfactant
+GAMMAinf = 8 * 10 ** -6 # Surface excess of surfactant at complete-coverage of interface [mol/m^2]
+Kads = 600              # Adsorption rate-constant 700;0.0001- 600;0.0006/7
+Kdes = 0.0006/7         # Desorption rate-constant
+m = 0.06
+Enth = 5.629
+CMC = 0.128             # Critical Micelle Concentration, [mol/m^3]; KrytoxFSH MW7500 CMC=0.128
+
+# CONSTANTS
+RhoO = 1614             # Oil density [kg/m^3]
+RhoW = 1000             # Water density, [kg/m^3]
+NA = 6.023 * 10 ** 23   # Avogadro Number
+R = 8.314               # Universal gas-constant
+T = 293                 # Absolute temperature, [K]
+EpsilonHFE = 5.8        # Dielectric constant of oil
+F = 96400               # Faraday's number *)
 z = 1
 r0 = 0.2 * 10 ** -9 * 45 ** 0.6
 
-Tau0c = 0.0026
 def GammaDOTc(Qoil, wjet0sol):
     return Qoil/H ** 2/wn - wjet0sol
 def etaoNN(Qoil, wjet0sol):
     return EtaInf + (EtaZero - EtaInf)/(1 + (GammaDOTc(Qoil, wjet0sol)/77) ** n)
-# 0.03267+(0.02946-0.03267)/(1+(GammaDOTc(Qoil, wjet0sol)/99.7) ** n); M8410 Min.Oil Carreau-model
-# etaoNN=Tau0c/(GammaDOTc(Qoil,wjet0sol)+Kvisc*GammaDOTc(Qoil, wjet0sol) ** (n-1); M5904 Min.Oil HB-model
 
 # In[55]:=
 def GammaDOTd(Qoil, wjet0sol):
