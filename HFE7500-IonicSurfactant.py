@@ -214,8 +214,6 @@ def Psi(Tdrop=Tdrop):
 def Cfactor(Tdrop=Tdrop):
     return exp(-z * Psi(Tdrop) * (F / R / T))
 
-Kdes = 0.0002
-Kads = 1400
 if is_ionic:
     TauI=(Kads*Cbulk**2+Kdes) ** -1
 else:
@@ -229,19 +227,10 @@ def zz2(Qoil, Tdrop=Tdrop):
     return zz1(Qoil, Tdrop)/(1+zz1(Qoil, Tdrop))
 
 def DGamma(Qoil, Tdrop=Tdrop):
-    m = 0.06
-    Enth = 5.629
-    Kdes = 0.0002
-    Kads = 1400
-    # (* DGamma=Gamma(Tdrop)/GammaINF *)
     return 1-exp(-(Tdrop/TauI)/(1+Pe(Qoil)))*zz1(Qoil, Tdrop) * exp(-Enth*zz2(Qoil, Tdrop)**m)/(1+zz1(Qoil, Tdrop)*exp(-Enth*zz2(Qoil, Tdrop)**m))
 # DGammaEl[Qoil_]:=27.72*0.138/1.138*(DGamma[Qoil])^1.138;
 # SIGMAel[Qoil_]:=4*R*T/F*(2*EpsilonHFE*(8.85*10^-11)*R*T*CmonINT[Qoil])^0.5*(1-Cosh[z*Psi*(F/R/T)])
 def SIGMAio(Qoil, Tdrop=Tdrop):
-    m = 0.06
-    Enth = 5.629
-    Kdes = 0.0002
-    Kads = 1400
     if is_ionic:
         return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil, Tdrop))
     else:
@@ -253,10 +242,6 @@ def Pup(Qoil, Tdrop=Tdrop):
 def Pdown(Qoil, Tdrop=Tdrop):
     return SIGMAio(Qoil, Tdrop)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
 def FgammaIO(Qoil, Tdrop=Tdrop):
-    m = 0.06
-    Enth = 5.629
-    Kdes = 0.0002
-    Kads = 1400
     return -(SIGMAio(Qoil, Tdrop)/wdisp)*H*wdisp
 
 # (* The sum of two *)
