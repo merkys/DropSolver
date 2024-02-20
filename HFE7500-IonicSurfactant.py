@@ -6,6 +6,7 @@ import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
 debug = True
+is_ionic = True
 
 # In[35]:=
 Kd = 0.001      # water viscosity, [Pa*s] *)
@@ -139,15 +140,24 @@ if debug:
 
 # In[86]:= (*Micelle kinetics and surfactant adsorption*)
 CBmic = (Cbulk-CMC) # (*Qoil*Tdrop*NA/.wjet0sol->sol1;*)
-LambdaAgg = 0.5*(r0+r0*Nmon0**(1/3))*(Dmon+Dmic)
+if is_ionic:
+    LambdaAgg = 0.5*(r0+r0*Nmon0**(1/3))*(Dmon+Dmic)
+else:
+    LambdaAgg = Cbulk*(1+Nmon0**(1/3))**2/Nmon0**(1/3)
 # (* Cmic is a function of variable Tdrop!*)
 Cmic = Function('Cmic')
 # (*LambdaS->0.01*LambdaF*); # (*F->Fast, S->Slow *)
 LambdaF = 10 ** 6 * (2/Nmon0)
-LambdaS = 10 ** 2 * (Nmon0-2)/Nmon0
+if is_ionic:
+    LambdaS = 10 ** 2 * (Nmon0-2)/Nmon0
+else:
+    LambdaS = 10 ** 3 * (Nmon0-2)/Nmon0
 CDECmic = Cmic(Tdrop)*(LambdaF+LambdaS)
 Cmon = Function('Cmon')
-CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
+if is_ionic:
+    CAGGmic = (LambdaAgg/Nmon0)*(Cmon(Tdrop)) # (*Nmic/Nmon0*LambdaAgg*Tdrop*)
+else:
+    CAGGmic = LambdaAgg/Nmon0*(Cmon(Tdrop)) # CHECKME: Same as for non-ionic?
 
 CBmon = CMC # (*Qoil*Tdrop*NA/.wjet0sol->sol1*);
 CRELmon=Cmic(Tdrop) * (LambdaF + LambdaS)
@@ -183,9 +193,15 @@ def Cfactor(Tdrop=Tdrop):
 
 Kdes = 0.0002
 Kads = 1400
-TauI=(Kads*Cbulk**2+Kdes) ** -1
+if is_ionic:
+    TauI=(Kads*Cbulk**2+Kdes) ** -1
+else:
+    TauI=(Kads*Cbulk+Kdes) ** -1
 def zz1(Qoil, Tdrop=Tdrop):
-    return Kads/Kdes*(Cfactor(Tdrop)*CmonINT(Qoil, Tdrop))**2
+    if is_ionic:
+        return Kads/Kdes*(Cfactor(Tdrop)*CmonINT(Qoil, Tdrop))**2
+    else:
+        return Kads/Kdes*CmonINT(Qoil, Tdrop)
 def zz2(Qoil, Tdrop=Tdrop):
     return zz1(Qoil, Tdrop)/(1+zz1(Qoil, Tdrop))
 
@@ -203,7 +219,10 @@ def SIGMAio(Qoil, Tdrop=Tdrop):
     Enth = 5.629
     Kdes = 0.0002
     Kads = 1400
-    return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil, Tdrop))
+    if is_ionic:
+        return sigmaEQ+0.5*(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.005-DGamma(Qoil, Tdrop))
+    else:
+        return sigmaEQ+(1-exp(-Tdrop/TauI/(1+Pe(Qoil))))*GAMMAinf*R*T*log(1.003-DGamma(Qoil, Tdrop))
 
 # In[109]:= (* Capillary force at the interface *)
 def Pup(Qoil, Tdrop=Tdrop):
