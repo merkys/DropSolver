@@ -75,8 +75,6 @@ def GammaDOTd(Qoil, wjet0sol):
 # def etaw(wjet0sol, Qw, H, wn):
 #     return etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd(wjet0sol, Qw, H, wn)) ** p)/.etaINF→0.00532/.Kd→1.276/.B1→4.578;
 def etaw(Qoil, wjet0sol):
-    etaINF1 = 0.001
-    B1 = 4.691
     return etaINF1 + (Kd - etaINF1)/(1 + (B1 * GammaDOTd(Qoil, wjet0sol)) ** p)
 
 def lhs(Qoil, wjet0sol):
@@ -111,9 +109,7 @@ def GammaDOTd(Qoil):
     return (Qw/H**2)/wjet0solF(Qoil)
 # (*etaw[wjet0sol_,Qw_,H_,wn_]:=etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd[wjet0sol,Qw,H,wn])^p)/.etaINF\[Rule]0.00532/.Kd\[Rule]1.276/.B1\[Rule]4.578;*)
 def etaw(Qoil):
-    etaINF = 0.001
-    B1 = 4.691
-    return etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd(Qoil))**p)
+    return etaINF1+(Kd-etaINF1)/(1+(B1*GammaDOTd(Qoil))**p)
 
 # In[73]:=
 def dPO(Qoil):
@@ -259,6 +255,7 @@ def Ljet(Qoil, Tdrop=Tdrop):
     return (etaw(Qoil)/SIGMAio(Qoil, Tdrop))*(8/pi/H/(CaNC(Qoil, Tdrop)+CaND(Qoil, Tdrop)))*(Qw*Qoil/2) ** 0.5
 # (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
 
+# FIXME: REMOVE, UNUSED
 # In[117]:=
 def De(Qoil):
     LambdaP = 0.0005
