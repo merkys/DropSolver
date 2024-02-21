@@ -1,4 +1,5 @@
 from shiny import App, Inputs, Outputs, Session, reactive, ui
+from surfactant.surfactant import calculate
 
 app_ui = ui.page_fluid(
     ui.input_switch("ionic", "Ionic", True),
@@ -10,6 +11,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.calculate)
     def _():
-        pass
+        calculate()
 
 app = App(app_ui, server)
