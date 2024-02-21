@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: debian:bookworm
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes python3-numpy python3-pandas python3-pip python3-plotly python3-seaborn
+    pip3 install --break-system-packages shiny shinyswatch shinywidgets
