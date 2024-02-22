@@ -5,7 +5,7 @@ from scipy.optimize import Bounds, minimize, newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
-def calculate(is_ionic=True, debug=False):
+def calculate(is_ionic=True, omega=0.006, debug=False):
     # CHANGING PARAMETERS, SET BY USER
 
     # NON-NEWTONIAN VISCOSITY PARAMETERS
@@ -27,7 +27,7 @@ def calculate(is_ionic=True, debug=False):
     wdisp = 60 * 10 ** -6   # Width of the Dispersed-phase channel
     wout = 110 * 10 ** -6   # Width of the outlet channel
 
-    omega = 0.006           # SURFACTANT CONCENTRATION wt% (dissolved in oil)
+    # omega = 0.006         # SURFACTANT CONCENTRATION wt% (dissolved in oil)
 
     # PARAMETERS SET BY THE CHOICE OF OIL/SURFACTANT TYPE; further not changed by user
     # SURFACTANT AND ADSORPTION PARAMETERS
