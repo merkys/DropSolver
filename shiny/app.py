@@ -6,6 +6,11 @@ import pandas
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
+    ui.input_numeric("wn", "width of the focussing nozzle, [m]", 7*10 ** -5),
+    ui.input_numeric("Ln", "length of the focussing nozzle, [m]", 7*10 ** -5),
+    ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont)", 6*10 ** -5),
+    ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp)", 7*10 ** -5),
+    ui.input_numeric("wout", "Width of the outlet channel (wout)", 11*10 ** -5),
     ui.input_numeric("omega", "Surfactant concentration wt% (dissolved in oil)", 0.006, min=0, max=1, step=0.001),
     ui.input_switch("is_ionic", "Ionic", True),
     ui.input_action_button("calculate", "Calculate"),
