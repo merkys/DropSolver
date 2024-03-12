@@ -6,11 +6,21 @@ import pandas
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
+
+    # NON-NEWTONIAN VISCOSITY PARAMETERS
+    ui.input_numeric("Kd", "disperse-phase consistency index, [Pa*s]", 0.001),
+    ui.input_numeric("etaINF1", "IF disperse-phase is Newtonian, Kd=etaINF1", 0.001),
+    ui.input_numeric("B1", "? (B1)", 4.691),
+    ui.input_numeric("p", "NONLINEARITY INDEX for dispersed phase", 1.0),
+    ui.input_numeric("Kvisc", "Oil viscosity index", 0.0014),
+
+    # CHIP GEOMETRIC PARAMETERS
     ui.input_numeric("wn", "width of the focussing nozzle (wn), [m]", 7*10 ** -5),
     ui.input_numeric("Ln", "length of the focussing nozzle (Ln), [m]", 7*10 ** -5),
     ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont)", 6*10 ** -5),
     ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp)", 7*10 ** -5),
     ui.input_numeric("wout", "Width of the outlet channel (wout)", 11*10 ** -5),
+
     ui.input_numeric("omega", "Surfactant concentration wt% (dissolved in oil)", 0.006, min=0, max=1, step=0.001),
     ui.input_switch("is_ionic", "Ionic", True),
     ui.input_action_button("calculate", "Calculate"),
