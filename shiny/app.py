@@ -5,6 +5,7 @@ import numpy
 import pandas
 
 app_ui = ui.page_fluid(
+    ui.output_image("junction"),
     ui.input_numeric("omega", "Surfactant concentration wt% (dissolved in oil)", 0.006, min=0, max=1, step=0.001),
     ui.input_switch("is_ionic", "Ionic", True),
     ui.input_action_button("calculate", "Calculate"),
@@ -13,6 +14,10 @@ app_ui = ui.page_fluid(
 
 def server(input: Inputs, output: Outputs, session: Session):
     df: reactive.Value[pd.DataFrame] = reactive.Value()
+
+    @render.image
+    def junction():
+        return {"src": "shiny/junction.svg", "width": "300px"}
 
     @render.data_frame
     def result_dataframe():
