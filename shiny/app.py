@@ -14,6 +14,9 @@ app_ui = ui.page_fluid(
     ui.input_numeric("p", "Cross rate constant (disperse phase)", 1.0, min=0.1, max=2),
     ui.input_numeric("Kvisc", "Consistency index (continuous phase) [Pa*s]", 0.0014),
 
+    ui.input_numeric("B2", "Consistency (Cross time constant), (continuous phase) [s]", 77, min=0.01, max=100),
+    ui.input_numeric("n", "Cross rate constant (disperse phase)", 1, min=0.1, max=2),
+
     # CHIP GEOMETRIC PARAMETERS
     ui.input_numeric("wn", "Nozzle width (wn) [μm]", 70, min=5, max=200), # * 10 ** -6
     ui.input_numeric("Ln", "Nozzle length (Ln), [μm]", 70, min=5, max=200),
