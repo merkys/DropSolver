@@ -13,7 +13,8 @@ app_ui = ui.page_fluid(
     ui.input_numeric("B1", "Consistency (Cross time constant), (disperse phase) [s]", 4.691, min=0.1, max=2),
     ui.input_numeric("p", "Cross rate constant (disperse phase)", 1.0, min=0.1, max=2),
     ui.input_numeric("Kvisc", "Consistency index (continuous phase) [Pa*s]", 0.0014),
-
+    ui.input_numeric("EtaZero", "Zero-shear viscosity (continuous phase) [Pa*s]", 0.0014, min=0.0005, max=5),
+    ui.input_numeric("EtaInf", "Infinite-shear viscosity (continuous phase) [Pa*s]", 0.0014, min=0.0002, max=0.05),
     ui.input_numeric("B2", "Consistency (Cross time constant), (continuous phase) [s]", 77, min=0.01, max=100),
     ui.input_numeric("n", "Cross rate constant (disperse phase)", 1, min=0.1, max=2),
 
