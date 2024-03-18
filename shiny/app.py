@@ -8,18 +8,19 @@ app_ui = ui.page_fluid(
     ui.output_image("junction"),
 
     # NON-NEWTONIAN VISCOSITY PARAMETERS
-    ui.input_numeric("Kd", "disperse-phase consistency index, [Pa*s]", 0.001),
-    ui.input_numeric("etaINF1", "IF disperse-phase is Newtonian, Kd=etaINF1", 0.001),
-    ui.input_numeric("B1", "? (B1)", 4.691),
-    ui.input_numeric("p", "NONLINEARITY INDEX for dispersed phase", 1.0),
-    ui.input_numeric("Kvisc", "Oil viscosity index", 0.0014),
+    ui.input_numeric("Kd", "Zero-shear viscosity (disperse phase) [Pa*s]", 0.001, min=0.0005, max=5),
+    ui.input_numeric("etaINF1", "Infinite-shear viscosity (disperse phase) [Pa*s]", 0.001, min=0.0002, max=0.05),
+    ui.input_numeric("B1", "Consistency (Cross time constant), (disperse phase) [s]", 4.691, min=0.1, max=2),
+    ui.input_numeric("p", "Cross rate constant (disperse phase)", 1.0, min=0.1, max=2),
+    ui.input_numeric("Kvisc", "Consistency index (continuous phase) [Pa*s]", 0.0014),
 
     # CHIP GEOMETRIC PARAMETERS
-    ui.input_numeric("wn", "width of the focussing nozzle (wn), [m]", 7*10 ** -5),
-    ui.input_numeric("Ln", "length of the focussing nozzle (Ln), [m]", 7*10 ** -5),
-    ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont)", 6*10 ** -5),
-    ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp)", 7*10 ** -5),
-    ui.input_numeric("wout", "Width of the outlet channel (wout)", 11*10 ** -5),
+    ui.input_numeric("wn", "Nozzle width (wn) [m]", 7*10 ** -5),
+    ui.input_numeric("Ln", "Nozzle length (Ln), [m]", 7*10 ** -5),
+    ui.input_numeric("H", "Channel height [m]", 5), # FIXME
+    ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont) [m]", 6*10 ** -5),
+    ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp) [m]", 7*10 ** -5),
+    ui.input_numeric("wout", "Width of the outlet channel (wout) [m]", 11*10 ** -5),
 
     ui.input_numeric("omega", "Surfactant concentration wt% (dissolved in oil)", 0.006, min=0, max=1, step=0.001),
     ui.input_switch("is_ionic", "Ionic", True),
