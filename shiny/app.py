@@ -15,14 +15,14 @@ app_ui = ui.page_fluid(
     ui.input_numeric("Kvisc", "Consistency index (continuous phase) [Pa*s]", 0.0014),
 
     # CHIP GEOMETRIC PARAMETERS
-    ui.input_numeric("wn", "Nozzle width (wn) [m]", 7*10 ** -5),
-    ui.input_numeric("Ln", "Nozzle length (Ln), [m]", 7*10 ** -5),
-    ui.input_numeric("H", "Channel height [m]", 5), # FIXME
-    ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont) [m]", 6*10 ** -5),
-    ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp) [m]", 7*10 ** -5),
-    ui.input_numeric("wout", "Width of the outlet channel (wout) [m]", 11*10 ** -5),
+    ui.input_numeric("wn", "Nozzle width (wn) [μm]", 70, min=5, max=200), # * 10 ** -6
+    ui.input_numeric("Ln", "Nozzle length (Ln), [μm]", 70, min=5, max=200),
+    ui.input_numeric("H", "Channel height [μm]", 70, min=5, max=200), # FIXME - what is the default?
+    ui.input_numeric("wcont", "Width of the Continuous-phase channel (wcont) [μm]", 60, min=5, max=300),
+    ui.input_numeric("wdisp", "Width of the Dispersed-phase channel (wdisp) [μm]", 70, min=5, max=300),
+    ui.input_numeric("wout", "Width of the outlet channel (wout) [μm]", 110, min=5, max=300),
 
-    ui.input_numeric("omega", "Surfactant concentration wt% (dissolved in oil)", 0.006, min=0, max=1, step=0.001),
+    ui.input_numeric("omega", "Fraction of dissolved surfactant", 0.006, min=0, max=1, step=0.001),
     ui.input_switch("is_ionic", "Ionic", True),
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
