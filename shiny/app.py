@@ -8,7 +8,15 @@ import surfactant.parameters
 def create_numeric_input(parameter):
     if 'dimension' in parameter:
         parameter['description'] += ' [{}]'.format(parameter['dimension'])
-    return ui.input_numeric(parameter['parameter'], parameter['description'], parameter['default_value'])
+    if 'min' not in parameter:
+        parameter['min'] = None
+    if 'max' not in parameter:
+        parameter['max'] = None
+    return ui.input_numeric(parameter['parameter'],
+                            parameter['description'],
+                            parameter['default_value'],
+                            min=parameter['min'],
+                            max=parameter['max'])
 
 numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p, surfactant.parameters.parameters())]
 
