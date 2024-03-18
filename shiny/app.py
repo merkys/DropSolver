@@ -3,6 +3,7 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from surfactant.surfactant import calculate
 import numpy
 import pandas
+import surfactant.parameters
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
@@ -48,6 +49,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.calculate)
     def _():
+        parameters = surfactant.parameters.parameters()
         table = calculate(is_ionic=input.is_ionic(), omega=input.omega())
         df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
 
