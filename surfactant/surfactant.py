@@ -16,7 +16,7 @@ def calculate(is_ionic=True, omega=0.006, debug=False):
     Kvisc = 0.0014      # Oil viscosity index
     EtaZero = 0.0014    # IF continuous-phase (oil) is Newtonian, EtaZero=etaINF
     EtaInf = 0.0014
-    B2 = 77
+    B2 = 0.01
     n = 1.0             # NONLINEARITY INDEX for continuous phase
 
     # CHIP GEOMETRIC PARAMETERS
@@ -65,7 +65,7 @@ def calculate(is_ionic=True, omega=0.006, debug=False):
     def GammaDOTc(Qoil, wjet0sol):
         return Qoil/H ** 2/wn - wjet0sol
     def etaoNN(Qoil, wjet0sol):
-        return EtaInf + (EtaZero - EtaInf)/(1 + (GammaDOTc(Qoil, wjet0sol)/77) ** n)
+        return EtaInf + (EtaZero - EtaInf)/(1 + (B2 * GammaDOTc(Qoil, wjet0sol)) ** n)
 
     # In[55]:=
     def GammaDOTd(Qoil, wjet0sol):
