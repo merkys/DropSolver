@@ -41,6 +41,16 @@ def server(input: Inputs, output: Outputs, session: Session):
         return render.DataGrid(df())
 
     @reactive.Effect
+    @reactive.event(input.is_newtonian)
+    def _():
+        if input.is_newtonian():
+            # These two values have to be equal
+            ui.update_numeric("Kd", value=input.etaINF1())
+            ui.update_numeric("EtaZero", value=input.EtaInf())
+        else:
+            pass
+
+    @reactive.Effect
     @reactive.event(input.calculate)
     def _():
         parameters = surfactant.parameters.parameters()
