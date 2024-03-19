@@ -24,6 +24,7 @@ app_ui = ui.page_fluid(
     ui.output_image("junction"),
     *numeric_inputs,
     ui.input_switch("is_ionic", "Ionic", True),
+    ui.input_switch("is_newtonian", "Newtonian", False),
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
 )
