@@ -16,6 +16,6 @@ Dispersed-phase channel width,wdisp,μm,1E-06,0.006,5,300,
 Outlet-channel width,wout,μm,1E-06,0.011,5,300,
 Fraction of dissolved surfactant,omega,,,0.006,,,
 Interface tension without any surfactant,sigmaEQ,mN/m,0.001,0.052,0.1,72,72 mN/m - surface tension of a clean water.
-Dispersed-phase flow rate,Qw,μl/hr,,6.116E-10,10,10000,
+Dispersed-phase flow rate,Qw,μl/hr,2.78E-13,6.116E-10,10,10000,
 Continuous-phase flow rate,Qoil,μl/hr,,,10,10000,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μl/hr] ir Vdrop, [pl])"
 Droplet volume [final solutions],Vdrop,pl,,,,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μl/hr] ir Vdrop, [pl])"
