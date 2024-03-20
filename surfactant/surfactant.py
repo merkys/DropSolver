@@ -289,7 +289,7 @@ def calculate(is_ionic=True, omega=0.006, debug=False):
         return 0.7 * (CaNC(Qoil, Tdrop) ** (2/3)/CaND(Qoil, Tdrop) ** (2/3)/(1+3.35 * CaNC(Qoil, Tdrop) ** (2/3))) * (1+CaND(Qoil, Tdrop) ** (1/3)) ** 2
 
     def VcontSq(Qoil, Tdrop=Tdrop):
-        return ((Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2) * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
+        return (Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2 * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
 
     def Ffrict(Qoil, Tdrop=Tdrop):
         z = 2.346*n/(2.423*n+0.918)
