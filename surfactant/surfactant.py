@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from scipy.interpolate import interp1d
-from scipy.optimize import Bounds, minimize, newton
+from scipy.optimize import newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
