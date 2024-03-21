@@ -76,10 +76,11 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def etaoNN(Qoil):
         return EtaInf + (EtaZero - EtaInf)/(1+(GammaDOTc(Qoil)/77)**n)
     def GammaDOTd(Qoil):
-        return (Qw/H**2)/wjet0solF(Qoil)
+        return Qw / H ** 2 / wjet0solF(Qoil)
     # (*etaw[wjet0sol_,Qw_,H_,wn_]:=etaINF+(Kd-etaINF)/(1+(B1*GammaDOTd[wjet0sol,Qw,H,wn])^p)/.etaINF\[Rule]0.00532/.Kd\[Rule]1.276/.B1\[Rule]4.578;*)
     def etaw(Qoil):
-        return etaINF1+(Kd-etaINF1)/(1+(B1*GammaDOTd(Qoil))**p)
+        # CHECKME: Should this have etaINF=0.001,B1=4.691 ?
+        return etaINF1 + (Kd - etaINF1)/(1 + (B1 * GammaDOTd(Qoil)) ** p)
 
     # In[73]:=
     def dPO(Qoil):
