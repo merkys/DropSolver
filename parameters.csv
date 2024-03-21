@@ -19,3 +19,6 @@ Interface tension without any surfactant,sigmaEQ,mN/m,0.001,0.052,0.1,72,72 mN/m
 Dispersed-phase flow rate,Qw,μl/hr,2.78E-13,6.116E-10,10,10000,
 Continuous-phase flow rate,Qoil,μl/hr,,,10,10000,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μl/hr] ir Vdrop, [pl])"
 Droplet volume [final solutions],Vdrop,pl,,,,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μl/hr] ir Vdrop, [pl])"
+"Continuous-phase flow rate, start",QoilStart,μl/hr,2.78E-13,2.502E-11,,,
+"Continuous-phase flow rate, end",QoilEnd,μl/hr,2.78E-13,1.668E-10,,,
+"Continuous-phase flow rate, step",QoilStep,μl/hr,2.78E-13,2.78E-11,,,

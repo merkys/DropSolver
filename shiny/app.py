@@ -53,6 +53,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.calculate)
     def _():
+        if len(numpy.arange(QoilStart, QoilEnd, QoilStep)) > 10:
+            pass # TODO: Error, refuse to calculate, too many points
         parameters = surfactant.parameters.parameters()
         table = calculate(is_ionic=input.is_ionic(), omega=input.omega())
         df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
