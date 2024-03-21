@@ -20,3 +20,13 @@ def parameters():
                 del parameter[field]
         parameters.append(parameter)
     return parameters
+
+def to_defaults_string():
+    defaults = []
+    for parameter in parameters():
+        if 'default_value' not in parameter:
+            continue
+        if 'SI_multiplier' in parameter:
+            parameter['default_value'] *= parameter['SI_multiplier']
+        defaults.append("{}={}".format(parameter['parameter'], parameter['default_value']))
+    return ', '.join(defaults)
