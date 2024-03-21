@@ -22,9 +22,9 @@ numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_val
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
-    *numeric_inputs,
     ui.input_switch("is_ionic", "Ionic", True),
     ui.input_switch("is_newtonian", "Newtonian", False),
+    *numeric_inputs,
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
 )
