@@ -5,7 +5,7 @@ from scipy.optimize import Bounds, minimize, newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
-def calculate(is_ionic=True, omega=0.006, debug=False, reporter=None):
+def calculate(is_ionic=True, omega=0.006, Qw=220 * 2.78 * 10 ** -13, QoilStart=90 * 2.78 * 10 ** -13, QoilEnd=600 * 2.78 * 10 ** -13, QoilStep=100 * 2.78 * 10 ** -13, debug=False, reporter=None):
     # CHANGING PARAMETERS, SET BY USER
 
     # NON-NEWTONIAN VISCOSITY PARAMETERS
@@ -81,10 +81,6 @@ def calculate(is_ionic=True, omega=0.006, debug=False, reporter=None):
         return wn * (etaw(Qoil, wjet0sol) * Qw / Qoil / etaoNN(Qoil, wjet0sol))
 
     # In[62]:=
-    Qw        = 220 * 2.78 * 10 ** -13
-    QoilStart =  90 * 2.78 * 10 ** -13
-    QoilEnd   = 600 * 2.78 * 10 ** -13
-    QoilStep  = 100 * 2.78 * 10 ** -13
     def lhs_rhs_diff(wjet0sol, Qoil):
         return (lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol))**2
     data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
