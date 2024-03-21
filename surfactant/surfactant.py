@@ -39,7 +39,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     r0 = 0.2 * 10 ** -9 * 45 ** 0.6
 
     def GammaDOTc(Qoil, wjet0sol):
-        return Qoil/H ** 2/wn - wjet0sol
+        return Qoil/H ** 2/(wn - wjet0sol)
     def etaoNN(Qoil, wjet0sol):
         return EtaInf + (EtaZero - EtaInf)/(1 + (B2 * GammaDOTc(Qoil, wjet0sol)) ** n)
 
@@ -58,11 +58,11 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
 
     # In[62]:=
     def lhs_rhs_diff(wjet0sol, Qoil):
-        return (lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol))**2
+        return lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol)
     data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
     data_y = []
     for Qoil in data_x:
-        data_y.append(*list(minimize(lhs_rhs_diff, [10 ** -5], args=(Qoil,), bounds=Bounds(10 ** -5, 10 ** -4)).x))
+        data_y.append(newton(lhs_rhs_diff, x0=(Kd*Qw)/(EtaZero*QoilEnd)*wn, x1=wn, args=(Qoil,)))
     if debug:
         print(data_x)
         print(data_y)
@@ -156,7 +156,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
         return (Qoil/H/wcont)*wout/Dmon
 
     # In[95]:=
-    Qoil = (50) * 2.78 * 10 ** -13
+    Qoil = QoilStart
     eq = [Eq(CBmic+CAGGmic-CDECmic-(1+Pe(Qoil)) * Cmic(Tdrop).diff(Tdrop), 0),
           Eq(CBmon+CRELmon-CAGGmon-(1+Pe(Qoil)) * Cmon(Tdrop).diff(Tdrop), 0)]
     ABC = dsolve(eq, [Cmon(Tdrop), Cmic(Tdrop)], ics={Cmon(0): CMC, Cmic(0): Cbulk-CMC})
