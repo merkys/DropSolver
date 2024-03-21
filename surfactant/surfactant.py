@@ -5,35 +5,11 @@ from scipy.optimize import Bounds, minimize, newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
-def calculate(is_ionic=True, omega=0.006, Qw=220 * 2.78 * 10 ** -13, QoilStart=90 * 2.78 * 10 ** -13, QoilEnd=600 * 2.78 * 10 ** -13, QoilStep=100 * 2.78 * 10 ** -13, debug=False, reporter=None):
-    # CHANGING PARAMETERS, SET BY USER
-
-    # NON-NEWTONIAN VISCOSITY PARAMETERS
-    Kd = 0.001          # disperse-phase consistency index, [Pa*s]
-    etaINF1 = 0.001     # IF disperse-phase is Newtonian, Kd=etaINF1
-    B1 = 4.691
-    p = 1.0             # NONLINEARITY INDEX for dispersed phase
-    Kvisc = 0.0014      # Oil viscosity index
-    EtaZero = 0.0014    # IF continuous-phase (oil) is Newtonian, EtaZero=etaINF
-    EtaInf = 0.0014
-    B2 = 0.01
-    n = 1.0             # NONLINEARITY INDEX for continuous phase
-
-    # CHIP GEOMETRIC PARAMETERS
-    wn = 70 * 10 ** -6      # width of the focussing nozzle, [m]
-    Ln = 60 * 10 ** -6      # length of the focussing nozzle, [m]
-    H = 80 * 10 ** -6       # Height of the chip, [m]
-    wcont = 70 * 10 ** -6   # Width of the Continuous-phase channel
-    wdisp = 60 * 10 ** -6   # Width of the Dispersed-phase channel
-    wout = 110 * 10 ** -6   # Width of the outlet channel
-
-    # omega = 0.006         # SURFACTANT CONCENTRATION wt% (dissolved in oil)
-
+def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.0014, EtaInf=0.0014, B2=77.0, n=1.0, wn=7e-05, Ln=6e-05, H=8e-05, wcont=7e-05, wdisp=6e-05, wout=0.00011, omega=0.006, sigmaEQ=0.052, Qw=6.116e-11, QoilStart=2.502e-11, QoilEnd=1.668e-10, QoilStep=2.78e-11, is_ionic=True, debug=False, reporter=None):
     # PARAMETERS SET BY THE CHOICE OF OIL/SURFACTANT TYPE; further not changed by user
     # SURFACTANT AND ADSORPTION PARAMETERS
 
     Ms = 7.5                # Molar mass of surfactant [kg/mol]
-    sigmaEQ = (52) * 0.001  # surface tension of water/oil interface with no surfactant
     GAMMAinf = 8 * 10 ** -6 # Surface excess of surfactant at complete-coverage of interface [mol/m^2]
     Kads = 600              # Adsorption rate-constant 700;0.0001- 600;0.0006/7
     Kdes = 0.0006/7         # Desorption rate-constant
@@ -42,7 +18,7 @@ def calculate(is_ionic=True, omega=0.006, Qw=220 * 2.78 * 10 ** -13, QoilStart=9
     CMC = 0.128             # Critical Micelle Concentration, [mol/m^3]; KrytoxFSH MW7500 CMC=0.128
 
     if not is_ionic:
-        omega = 0.01
+        omega = 0.01 # CHECKME: Is this OK?
         Ms = 12.5
         GAMMAinf = 3.4 * 10 ** -6
         Kads = 18
@@ -275,8 +251,6 @@ def calculate(is_ionic=True, omega=0.006, Qw=220 * 2.78 * 10 ** -13, QoilStart=9
     def Reyn(Qoil):
         return RhoW*(Qoil/H/wcont)*wn/etaoNN(Qoil)
     def xi(Qoil):
-        z = 2.346*n / (2.423*n+0.918)
-        # (*2^(2*v+1)*(v+2)*)
         return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z) # (*+Del(Qoil)+Drel*)
 
     def CAF(Qoil, Tdrop=Tdrop):
@@ -288,7 +262,6 @@ def calculate(is_ionic=True, omega=0.006, Qw=220 * 2.78 * 10 ** -13, QoilStart=9
         return (Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2 * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
 
     def Ffrict(Qoil, Tdrop=Tdrop):
-        z = 2.346*n/(2.423*n+0.918)
         return CAF(Qoil, Tdrop) * xi(Qoil) * etaoNN(Qoil) * Tdrop * (VcontSq(Qoil, Tdrop)) * (Ln/wn) ** 2.25
 
     # In[128]:= (* SHEAR FORCE-RELATED TERM *)
