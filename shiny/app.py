@@ -53,10 +53,15 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.calculate)
     def _():
-        if len(numpy.arange(QoilStart, QoilEnd, QoilStep)) > 10:
-            pass # TODO: Error, refuse to calculate, too many points
-        parameters = surfactant.parameters.parameters()
-        table = calculate(is_ionic=input.is_ionic(), omega=input.omega())
-        df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
+        if len(numpy.arange(input.QoilStart(), input.QoilEnd(), input.QoilStep())) > 10:
+            msg = ui.modal("Web application can process only up to 10 continuous-phase flow rate values.",
+                           title="Too many data points",
+                           easy_close=True,
+                           footer=None)
+            ui.modal_show(msg)
+        else:
+            parameters = surfactant.parameters.parameters()
+            table = calculate(is_ionic=input.is_ionic(), omega=input.omega())
+            df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
 
 app = App(app_ui, server)
