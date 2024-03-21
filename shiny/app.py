@@ -1,5 +1,6 @@
 from pandas import DataFrame
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
+from surfactant.progress import Progress
 from surfactant.surfactant import calculate
 import numpy
 import pandas
@@ -53,7 +54,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.calculate)
     def _():
-        if len(numpy.arange(input.QoilStart(), input.QoilEnd(), input.QoilStep())) > 10:
+        npoints = len(numpy.arange(input.QoilStart(), input.QoilEnd(), input.QoilStep()))
+        if npoints > 10:
             msg = ui.modal("Web application can process only up to 10 continuous-phase flow rate values.",
                            title="Too many data points",
                            easy_close=True,
@@ -61,7 +63,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             ui.modal_show(msg)
         else:
             parameters = surfactant.parameters.parameters()
-            table = calculate(is_ionic=input.is_ionic(), omega=input.omega())
+            with ui.Progress(min=1, max=npoints) as progress_bar:
+                progress_bar.set(message="Preparing")
+                progress = Progress(progress_bar, "Calculating")
+                table = calculate(is_ionic=input.is_ionic(), omega=input.omega(), reporter=progress)
             df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
 
 app = App(app_ui, server)

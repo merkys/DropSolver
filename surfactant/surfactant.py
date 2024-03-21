@@ -5,7 +5,7 @@ from scipy.optimize import Bounds, minimize, newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
-def calculate(is_ionic=True, omega=0.006, debug=False):
+def calculate(is_ionic=True, omega=0.006, debug=False, reporter=None):
     # CHANGING PARAMETERS, SET BY USER
 
     # NON-NEWTONIAN VISCOSITY PARAMETERS
@@ -330,6 +330,8 @@ def calculate(is_ionic=True, omega=0.006, debug=False):
     data22_y = []
     for Qoil in data22_x:
         data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+        if reporter:
+            reporter.ping()
     data22_y = numpy.array(data22_y)
     if debug:
         print(data22_x)
