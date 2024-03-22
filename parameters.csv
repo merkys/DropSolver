@@ -2,12 +2,12 @@ description,parameter,dimension,SI multiplier,default value,min,max,comments
 Zero-shear viscosity (disperse phase),Kd,Pa路s,,0.001,0.0005,5,
 Infinite-shear viscosity (disperse phase),etaINF1,Pa路s,,0.001,0.0002,0.05,"If the disperse phase is Newtonian fluid, automatically Kd = etaINF1"
 "Consistency (Cross time constant), (disperse phase)",B1,s,,4.691,0.01,100,
-Cross rate constant (disperse phase),p,,,1,0.1,2,
+Cross rate constant (disperse phase),p,,,1,0,2,
 Consistency index (continuous phase),Kvisc,Pa路s,,0.0014,,,"艩itas parametras gali b奴ti nerodomas (nekei膷iamas vartotojo), nes da啪niausiai Kvisc = EtaInf"
 Zero-shear viscosity (continuous phase),EtaZero,Pa路s,,0.0014,0.0005,5,"Mineral oils like M5904, M8410, NF350 are shear-thickening fluids."
 Infinite-shear viscosity (continuous phase),EtaInf,Pa路s,,0.0014,0.0002,0.05,"If the continuous phase is Newtonian fluid, automatically "
 "Consistency (Cross time constant), (continuous phase)",B2,s,,77,0.01,100,
-Cross rate constant (disperse phase),n,,,1,0.1,2,
+Cross rate constant (disperse phase),n,,,1,0,2,
 Nozzle width,wn,渭m,1E-06,70,5,200,
 Nozzle length,Ln,渭m,1E-06,60,5,200,
 Channel height,H,渭m,1E-06,80,5,200,
@@ -22,3 +22,11 @@ Droplet volume [final solutions],Vdrop,pl,,,,,"Sprendini懦 lentel臈je pateikiamo
 "Continuous-phase flow rate, start",QoilStart,渭l/hr,2.78E-13,90,,,
 "Continuous-phase flow rate, end",QoilEnd,渭l/hr,2.78E-13,600,,,
 "Continuous-phase flow rate, step",QoilStep,渭l/hr,2.78E-13,100,,,
+,,,,,,,
+Surfactant molar mass,Ms,kg/mol,,7.5 or 12.5,,,Ionic or Nonionic
+Adsorption Excess,GAMMAinf,mol/m^2,,8*10^-6 or 3.4*10^-6,,,Ionic or Nonionic
+Adsorption-rate constant,Kads,m^3/mol/s,,600 or 18,,,
+Desorption-rate constant,Kdes,1/s,,0.0006/7 or 0.006,,,"奿e surfaktanto ir adsorbcijos parametrai (raudoni) gali b?ti ""u瀎iksuoti"" pagal pasirinkt? tip? (joninis/nejoninis)"
+Relative Enthropy of adsorption,Enth,,,5.62 or 0,,,
+Adsorption saturation index,m,,,0.06 or 0,,,
+Critical micelle concentration,CMC,mol/m^3,,0.128 or 0.15,,,
