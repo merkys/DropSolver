@@ -18,7 +18,6 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     CMC = 0.128             # Critical Micelle Concentration, [mol/m^3]; KrytoxFSH MW7500 CMC=0.128
 
     if not is_ionic:
-        omega = 0.01 # CHECKME: Is this OK?
         Ms = 12.5
         GAMMAinf = 3.4 * 10 ** -6
         Kads = 18
