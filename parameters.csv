@@ -23,7 +23,7 @@ Droplet volume [final solutions],Vdrop,pl,,,,,"Sprendinių lentelėje pateikiamo
 "Continuous-phase flow rate, end",QoilEnd,μl/hr,2.78E-13,600,,,
 "Continuous-phase flow rate, step",QoilStep,μl/hr,2.78E-13,100,,,
 Surfactant molar mass,Ms,kg/mol,,7.5,,,Ionic or Nonionic
-Adsorption Excess,GAMMAinf,mol/m^2,,8.00E-06,,,Ionic or Nonionic
+Adsorption Excess,GAMMAinf,mol/m^2,,8E-06,,,Ionic or Nonionic
 Adsorption-rate constant,Kads,m^3/mol/s,,600,,,
 Desorption-rate constant,Kdes,1/s,,0.0006,,,"Šie surfaktanto ir adsorbcijos parametrai (raudoni) gali būti ""užfiksuoti"" pagal pasirinktą tipą (joninis/nejoninis)"
 Relative Enthropy of adsorption,Enth,,,5.62,,,
