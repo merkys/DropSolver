@@ -221,23 +221,6 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
         return (etaw(Qoil)*Ud(Qoil))/SIGMAio(Qoil, Tdrop)*(Qoil/Qw) ** (1/3)
     def Ljet(Qoil, Tdrop=Tdrop):
         return (etaw(Qoil)/SIGMAio(Qoil, Tdrop))*(8/pi/H/(CaNC(Qoil, Tdrop)+CaND(Qoil, Tdrop)))*(Qw*Qoil/2) ** 0.5
-    # (*Oh=etaoNN/(RhoO*sigmaEQ*Ljet)^0.5/.sol1[[1]]*)
-
-    # FIXME: REMOVE, UNUSED
-    # In[117]:=
-    def De(Qoil):
-        LambdaP = 0.0005
-        return LambdaP*Uc(Qoil)/H # (* Deborah number *)(*Dex500K\[Rule] 10%\[Rule]1.4ms*)
-    def Wi(Qoil):
-        LambdaP1 = 0
-        return LambdaP1*(Qoil/H ** 2)/wcont # (* Weissenberg number\[Rule] Lambda*Urotat/H!!! *)
-    def Del(Qoil):
-        beta = etaw(Qoil)/(etaw(Qoil)+0.001)
-        return -(1-beta)*(258+143*(1-beta))/25025*De(Qoil) ** 2
-    def Drel(Qoil):
-        beta = etaw(Qoil)/(etaw(Qoil)+0.001)
-        return -Wi(Qoil) ** 2 * (141-11*(1-beta))/1155
-    # (*etaw/(etaw+2)/.wjet0sol->sol1*)
 
     def We(Qoil, Tdrop=Tdrop):
         return RhoO*Uc(Qoil) ** 2 * (1+1/CaND(Qoil) ** (1/3)) ** 2 * (wout*CaNC(Qoil) ** (2/3)) ** 2/SIGMAio(Qoil, Tdrop) # (*Weber number*)
