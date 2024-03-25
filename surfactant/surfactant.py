@@ -73,7 +73,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def GammaDOTc(Qoil):
         return (Qoil/H**2)/(wn - wjet0solF(Qoil))
     def etaoNN(Qoil):
-        return EtaInf + (EtaZero - EtaInf)/(1+(B2 * GammaDOTc(Qoil))**n)
+        return EtaInf + (EtaZero - EtaInf)/(1 + (B2 * GammaDOTc(Qoil))**n)
     def GammaDOTd(Qoil):
         return Qw / H ** 2 / wjet0solF(Qoil)
     def etaw(Qoil):
@@ -110,7 +110,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
 
     # In[80]:=
     Cbulk=RhoO*omega/Ms
-    Nmon0 = (1+2*((Cbulk/CMC)*(Cbulk-CMC))**0.5).real # CHECK: What is Re()?
+    Nmon0 = (1+2*((Cbulk/CMC)*(Cbulk-CMC))**0.5).real
     Dmon = (R*T/NA)/(3*pi*Kvisc*r0)
     Dmic = (R*T/NA)/(3*pi*Kvisc*r0*Nmon0**(1/3))
     Deff = ((Cbulk-CMC)*Dmic+CMC*Dmon)/Cbulk
@@ -204,7 +204,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def Pup(Qoil, Tdrop=Tdrop):
         return SIGMAio(Qoil, Tdrop)*(1/wdisp+1/H) # (* Acting upwards the outlet *)
     def Pdown(Qoil, Tdrop=Tdrop):
-        return SIGMAio(Qoil, Tdrop)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
+        return -SIGMAio(Qoil, Tdrop)*(2/wdisp+1/H) # (* Acting upwards the dispersed channel *)
     def FgammaIO(Qoil, Tdrop=Tdrop):
         return -(SIGMAio(Qoil, Tdrop)/wdisp)*H*wdisp
 
@@ -253,7 +253,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
         return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z1) # (*+Del(Qoil)+Drel*)
 
     def CAF(Qoil, Tdrop=Tdrop):
-        return 1.34 * CaNC(Qoil, Tdrop) ** (2/3) / CaND(Qoil, Tdrop) ** (2/3) * (1 + 3.35 * CaNC(Qoil, Tdrop) ** (1/3)) ** 2
+        return 1.34 * CaNC(Qoil, Tdrop) ** (2/3) / CaND(Qoil, Tdrop) ** (2/3) * (1 + 3.35 * CaND(Qoil, Tdrop) ** (1/3)) ** 2
 
     def VcontSq(Qoil, Tdrop=Tdrop):
         return (Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2 * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
