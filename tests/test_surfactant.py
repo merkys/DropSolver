@@ -26,8 +26,8 @@ class TestStringMethods(unittest.TestCase):
         result = calculate(is_ionic=False, Qw=50*Q_SI_multiplier, QoilStart=50*Q_SI_multiplier, QoilEnd=300*Q_SI_multiplier, QoilStep=50*Q_SI_multiplier, B1=1, B2=1, wn=37*micrometre, Ln=13*micrometre, H=18*micrometre, wcont=120*micrometre, wdisp=80*micrometre, wout=70*micrometre)
         self.assertLess(abs((target - result).min()), 20)
 
-    # From 'notebooks/2024-03-21/HFE7500+ non-Newtonian disp.phase, NonionicSurfactant (0.6perc).txt'
+    # From 'notebooks/2024-03-22/HFE7500-NonionicSurfactant (0.6perc) non-Newtonian disp.phase [2].txt'
     def test_non_test_newtonian_nonionic_0_6_perc(self):
-        target = numpy.array([[50, -145127], [100, -1151.19], [150, 927.812], [200, 485.574], [250, 340.443], [300.,265.617]])
-        result = calculate(is_ionic=False, Kd=0.381, etaINF1=0.00375, B1=4.691, B2=1, p=0.529, wn=37*micrometre, Ln=13*micrometre, H=18*micrometre, wcont=120*micrometre, wdisp=80*micrometre, wout=70*micrometre)
+        target = numpy.array([[50, 1146.36}, [100, 290.37], [150, 182.068], [200, 136.282], [250, 110.076], [300, 92.742]])
+        result = calculate(is_ionic=False, Kd=0.381, etaINF1=0.00375, B1=4.691, B2=1, p=0.529, wn=37*micrometre, Ln=13*micrometre, H=18*micrometre, wcont=120*micrometre, wdisp=80*micrometre, wout=70*micrometre, Qw=50*Q_SI_multiplier, QoilStart=50*Q_SI_multiplier, QoilEnd=301*Q_SI_multiplier, QoilStep=50*Q_SI_multiplier)
         self.assertLess(abs((target - result).min()), 20)
