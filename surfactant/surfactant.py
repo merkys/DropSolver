@@ -251,12 +251,11 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def Reyn(Qoil):
         return RhoW*(Qoil/H/wcont)*wn/etaoNN(Qoil)
     def xi(Qoil):
-        return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z) # (*+Del(Qoil)+Drel*)
+        z1 = 2.345 * n / (2.423 * n + 0.918)
+        return 24/Reyn(Qoil)*(1+0.15*(Reyn(Qoil)) ** z1) # (*+Del(Qoil)+Drel*)
 
     def CAF(Qoil, Tdrop=Tdrop):
-        Phi = Qw/Qoil
-        Lambda = Kd/etaoNN(Qoil)
-        return 0.7 * (CaNC(Qoil, Tdrop) ** (2/3)/CaND(Qoil, Tdrop) ** (2/3)/(1+3.35 * CaNC(Qoil, Tdrop) ** (2/3))) * (1+CaND(Qoil, Tdrop) ** (1/3)) ** 2
+        return 1.34 * CaNC(Qoil, Tdrop) ** (2/3) / CaND(Qoil, Tdrop) ** (2/3) * (1 + 3.35 * CaNC(Qoil, Tdrop) ** (1/3)) ** 2
 
     def VcontSq(Qoil, Tdrop=Tdrop):
         return (Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wcont+Ln)/(Ln+Ljet(Qoil, Tdrop))+(Qoil/H/HF(Qoil)/(wn-wjet0solF(Qoil))) ** 2 * (wn/wout) ** 2 * (Ljet(Qoil, Tdrop)+Ldrop(Tdrop))/(Ln+Ljet(Qoil, Tdrop))
