@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+local $/ = undef;
+
+while( <> ) {
+    s/\(\*.*?\*\)//g;
+    print;
+}
