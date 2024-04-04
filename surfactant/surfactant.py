@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from scipy.interpolate import interp1d
 from scipy.optimize import newton
 import numpy
