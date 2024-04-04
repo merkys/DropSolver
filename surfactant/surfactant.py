@@ -1,5 +1,6 @@
 from scipy.interpolate import interp1d
 from scipy.optimize import newton
+from surfactant.util import inclusive_range
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
@@ -48,7 +49,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     # In[62]:=
     def lhs_rhs_diff(wjet0sol, Qoil):
         return lhs(Qoil, wjet0sol) - rhs(Qoil, wjet0sol)
-    data_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
+    data_x = inclusive_range(QoilStart, QoilEnd, QoilStep)
     data_y = []
     for Qoil in data_x:
         data_y.append(newton(lhs_rhs_diff, x0=(Kd*Qw)/(EtaZero*QoilEnd)*wn, x1=wn, args=(Qoil,)))
@@ -265,7 +266,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     # In[409]:=
     def LHS_RHS_diff(Tdrop_sol, Qoil):
         return float(LHS(Qoil, Tdrop_sol).evalf() - RHS(Qoil, Tdrop_sol).evalf())
-    data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
+    data22_x = inclusive_range(QoilStart, QoilEnd, QoilStep)
     data22_y = []
     for Qoil in data22_x:
         try:
