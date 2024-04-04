@@ -278,7 +278,10 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     data22_x = numpy.arange(QoilStart, QoilEnd, QoilStep)
     data22_y = []
     for Qoil in data22_x:
-        data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+        try:
+            data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
+        except RuntimeError:
+            data22_y.append(numpy.nan)
         if reporter:
             reporter.ping()
     data22_y = numpy.array(data22_y)
