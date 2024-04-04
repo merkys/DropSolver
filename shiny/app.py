@@ -3,7 +3,6 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from surfactant.progress import Progress
 from surfactant.surfactant import calculate
 from surfactant.util import inclusive_range
-import numpy
 import pandas
 import surfactant.parameters
 
