@@ -5,11 +5,9 @@ from scipy.optimize import newton
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 
-def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.0014, EtaInf=0.0014, B2=77.0, n=1.0, wn=7e-05, Ln=6e-05, H=8e-05, wcont=7e-05, wdisp=6e-05, wout=0.00011, omega=0.006, sigmaEQ=0.052, Qw=6.116e-11, QoilStart=2.502e-11, QoilEnd=1.668e-10, QoilStep=2.78e-11, Ms=7.5, GAMMAinf=8e-06, Kads=600, Kdes=8.57e-05, Enth=5.62, m=0.06, CMC=0.128, is_ionic=True, debug=False, reporter=None):
+def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.0014, EtaInf=0.0014, B2=77.0, n=1.0, wn=7e-05, Ln=6e-05, H=8e-05, wcont=7e-05, wdisp=6e-05, wout=0.00011, omega=0.006, sigmaEQ=0.052, Qw=6.116e-11, QoilStart=2.502e-11, QoilEnd=1.668e-10, QoilStep=2.78e-11, Ms=7.5, GAMMAinf=8e-06, Kads=600, Kdes=8.57e-05, Enth=5.629, m=0.06, CMC=0.128, is_ionic=True, debug=False, reporter=None):
     # PARAMETERS SET BY THE CHOICE OF OIL/SURFACTANT TYPE; further not changed by user
     # SURFACTANT AND ADSORPTION PARAMETERS
-
-    Enth = 5.629
 
     if not is_ionic:
         Ms = 12.5

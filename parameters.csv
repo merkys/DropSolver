@@ -26,6 +26,6 @@ Surfactant molar mass,Ms,kg/mol,,7.5,,,Ionic or Nonionic
 Adsorption Excess,GAMMAinf,mol/m^2,,8E-06,,,Ionic or Nonionic
 Adsorption-rate constant,Kads,m^3/mol/s,,600,,,
 Desorption-rate constant,Kdes,1/s,,8.57E-05,,,"Šie surfaktanto ir adsorbcijos parametrai (raudoni) gali būti ""užfiksuoti"" pagal pasirinktą tipą (joninis/nejoninis)"
-Relative Enthropy of adsorption,Enth,,,5.62,,,
+Relative Enthropy of adsorption,Enth,,,5.629,,,
 Adsorption saturation index,m,,,0.06,,,
 Critical micelle concentration,CMC,mol/m^3,,0.128,,,
