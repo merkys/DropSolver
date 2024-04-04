@@ -63,10 +63,15 @@ def server(input: Inputs, output: Outputs, session: Session):
             ui.modal_show(msg)
         else:
             parameters = surfactant.parameters.parameters()
+            args = {}
+            for parameter in parameters:
+                if parameter['parameter'] not in input:
+                    continue
+                args[parameter['parameter']] = input[parameter['parameter']]()
             with ui.Progress(min=1, max=npoints) as progress_bar:
                 progress_bar.set(message="Preparing")
                 progress = Progress(progress_bar, "Calculating")
-                table = calculate(is_ionic=input.is_ionic(), omega=input.omega(), reporter=progress)
+                table = calculate(**args, reporter=progress)
             df.set(DataFrame(table, columns=["Qoil [μl/hr]", "Tdrop [pl]"]))
 
 app = App(app_ui, server)
