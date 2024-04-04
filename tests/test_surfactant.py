@@ -5,7 +5,7 @@ import unittest
 Q_SI_multiplier = 2.78 * 10 ** -13
 micrometre = 1e-6
 
-class TestStringMethods(unittest.TestCase):
+class TestSurfactant(unittest.TestCase):
 
     # From 'notebooks/2024-03-22/HFE7500-IonicSurfactant (0.6perc) [2].txt'
     def test_newtonian_ionic_0_6_perc(self):
