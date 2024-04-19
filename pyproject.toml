@@ -1,0 +1,16 @@
+[project]
+name = "IonicSurfactant"
+version = "0.1.0~dev"
+dependencies = [
+    "sympy",
+]
+authors = [
+    { name = "Andrius Merkys", email = "andrius.merkys@gmc.vu.lt" },
+]
+classifiers = [
+    "License :: OSI Approved :: BSD-3-Clause License",
+]
+[project.optional-dependencies]
+test = [
+    "unittest"
+]
