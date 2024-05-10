@@ -1,4 +1,4 @@
-from surfactant.surfactant import calculate
+from DropSolver.surfactant import calculate
 import numpy
 import unittest
 
