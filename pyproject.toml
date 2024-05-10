@@ -2,6 +2,8 @@
 name = "DropSolver"
 version = "0.1.0-dev"
 dependencies = [
+    "numpy",
+    "scipy",
     "sympy",
 ]
 authors = [" },
