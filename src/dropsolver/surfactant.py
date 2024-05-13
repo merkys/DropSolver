@@ -1,6 +1,6 @@
 from scipy.interpolate import interp1d
 from scipy.optimize import newton
-from DropSolver.util import inclusive_range
+from dropsolver.util import inclusive_range
 import numpy
 from sympy import Eq, Function, Symbol, dsolve, exp, log, pi
 

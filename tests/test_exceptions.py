@@ -1,4 +1,4 @@
-from DropSolver import calculate
+from dropsolver import calculate
 import numpy
 import unittest
 
