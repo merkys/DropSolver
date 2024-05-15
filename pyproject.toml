@@ -6,9 +6,9 @@ dependencies = [
     "scipy",
     "sympy",
 ]
-authors = [" },
+authors = [
     { name = "Valdemaras Milkus", email = "valdemaras.milkus@bti.vu.lt" },
-    { name = "Andrius Merkys", email = "andrius.merkys@gmc.vu.lt
+    { name = "Andrius Merkys", email = "andrius.merkys@gmc.vu.lt" },
 ]
 classifiers = [
     "License :: OSI Approved :: BSD-3-Clause License",
