@@ -1,10 +1,10 @@
 from pandas import DataFrame
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
-from surfactant.progress import Progress
-from surfactant.surfactant import calculate
-from surfactant.util import inclusive_range
+from dropsolver import calculate
+from dropsolver.progress import Progress
+from dropsolver.util import inclusive_range
 import pandas
-import surfactant.parameters
+import dropsolver.parameters
 
 def create_numeric_input(parameter):
     if 'dimension' in parameter:
@@ -19,7 +19,7 @@ def create_numeric_input(parameter):
                             min=parameter['min'],
                             max=parameter['max'])
 
-numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p, surfactant.parameters.parameters())]
+numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p, dropsolver.parameters.parameters())]
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
@@ -62,7 +62,7 @@ def server(input: Inputs, output: Outputs, session: Session):
                            footer=None)
             ui.modal_show(msg)
         else:
-            parameters = surfactant.parameters.parameters()
+            parameters = dropsolver.parameters.parameters()
             args = {}
             for parameter in parameters:
                 if parameter['parameter'] not in input:
