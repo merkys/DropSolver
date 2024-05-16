@@ -68,6 +68,10 @@ def server(input: Inputs, output: Outputs, session: Session):
                 if parameter['parameter'] not in input:
                     continue
                 args[parameter['parameter']] = input[parameter['parameter']]()
+                if parameter['parameter'].startswith('is_'):
+                    args[parameter['parameter']] = bool(args[parameter['parameter']])
+                else:
+                    args[parameter['parameter']] = float(args[parameter['parameter']])
                 if 'SI_multiplier' in parameter:
                     args[parameter['parameter']] *= parameter['SI_multiplier']
             with ui.Progress(min=1, max=npoints) as progress_bar:
