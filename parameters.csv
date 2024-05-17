@@ -7,7 +7,7 @@ Consistency index (continuous phase),Kvisc,Pa·s,,0.0014,,,"Šitas parametras ga
 Zero-shear viscosity (continuous phase),EtaZero,Pa·s,,0.0014,0.0005,5,"Mineral oils like M5904, M8410, NF350 are shear-thickening fluids."
 Infinite-shear viscosity (continuous phase),EtaInf,Pa·s,,0.0014,0.0002,0.05,"If the continuous phase is Newtonian fluid, automatically "
 "Consistency (Cross time constant), (continuous phase)",B2,s,,77,0.01,100,
-Cross rate constant (disperse phase),n,,,1,0,2,
+Cross rate constant (continuous phase),n,,,1,0,2,
 Nozzle width,wn,μm,1E-06,70,5,200,
 Nozzle length,Ln,μm,1E-06,60,5,200,
 Channel height,H,μm,1E-06,80,5,200,
