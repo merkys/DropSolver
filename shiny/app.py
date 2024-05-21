@@ -63,7 +63,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ui.modal_show(msg)
         else:
             parameters = dropsolver.parameters.parameters()
-            args = {}
+            args = { 'is_ionic': bool(input.is_ionic()) }
             for parameter in parameters:
                 if parameter['parameter'] not in input:
                     continue
