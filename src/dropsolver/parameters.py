@@ -15,7 +15,7 @@ def parameters():
                 parameter[field] = float(parameter[field])
             else:
                 del parameter[field]
-        for field in ['dimension', 'comments']:
+        for field in ['dimension', 'display', 'comments']:
             if not parameter[field]:
                 del parameter[field]
         parameters.append(parameter)

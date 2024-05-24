@@ -19,7 +19,7 @@ def create_numeric_input(parameter):
                             min=parameter['min'],
                             max=parameter['max'])
 
-numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p, dropsolver.parameters.parameters())]
+numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p and 'display' not in p, dropsolver.parameters.parameters())]
 
 app_ui = ui.page_fluid(
     ui.output_image("junction"),
