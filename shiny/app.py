@@ -19,13 +19,21 @@ def create_numeric_input(parameter):
                             min=parameter['min'],
                             max=parameter['max'])
 
-numeric_inputs = [create_numeric_input(p) for p in filter(lambda p: 'default_value' in p and 'display' not in p, dropsolver.parameters.parameters())]
+measurements = filter(lambda p: 'default_value' in p and 'display' not in p and 'dimension' in p and p['dimension'] == 'μm', dropsolver.parameters.parameters())
+other = filter(lambda p: 'default_value' in p and 'display' not in p and ('dimension' not in p or p['dimension'] != 'μm'), dropsolver.parameters.parameters())
 
-app_ui = ui.page_fluid(
-    ui.output_image("junction"),
-    ui.input_switch("is_ionic", "Ionic", True),
-    ui.input_switch("is_newtonian", "Newtonian", False),
-    *numeric_inputs,
+app_ui = ui.page_auto(
+    ui.card(
+        ui.input_switch("is_ionic", "Ionic", True),
+        ui.input_switch("is_newtonian", "Newtonian", False),
+    ),
+    ui.card(
+        ui.layout_columns(
+            ui.page_auto([create_numeric_input(p) for p in measurements]),
+            ui.page_auto(ui.output_image("junction")),
+        ),
+    ),
+    ui.card([create_numeric_input(p) for p in other]),
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
 )
