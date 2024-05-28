@@ -1,31 +1,31 @@
-description,parameter,dimension,SI multiplier,default value,min,max,display,comments
-Zero-shear viscosity (disperse phase),Kd,Pa·s,,0.001,0.0005,5,,
-Infinite-shear viscosity (disperse phase),etaINF1,Pa·s,,0.001,0.0002,0.05,,"If the disperse phase is Newtonian fluid, automatically Kd = etaINF1"
-"Consistency (Cross time constant), (disperse phase)",B1,s,,4.691,0.01,100,,
-Cross rate constant (disperse phase),p,,,1,0,2,,
-Consistency index (continuous phase),Kvisc,Pa·s,,0.0014,,,hidden,"Šitas parametras gali būti nerodomas (nekeičiamas vartotojo), nes dažniausiai Kvisc = EtaInf"
-Zero-shear viscosity (continuous phase),EtaZero,Pa·s,,0.0014,0.0005,5,,"Mineral oils like M5904, M8410, NF350 are shear-thickening fluids."
-Infinite-shear viscosity (continuous phase),EtaInf,Pa·s,,0.0014,0.0002,0.05,,"If the continuous phase is Newtonian fluid, automatically "
-"Consistency (Cross time constant), (continuous phase)",B2,s,,77,0.01,100,,
-Cross rate constant (continuous phase),n,,,1,0,2,,
-Nozzle width,wn,μm,1E-06,70,5,200,,
-Nozzle length,Ln,μm,1E-06,60,5,200,,
-Channel height,H,μm,1E-06,80,5,200,,
-Continuous-phase channel width,wcont,μm,1E-06,70,5,300,,
-Dispersed-phase channel width,wdisp,μm,1E-06,60,5,300,,
-Outlet-channel width,wout,μm,1E-06,110,5,300,,
-Fraction of dissolved surfactant,omega,,,0.006,,,,
-Interface tension without any surfactant,sigmaEQ,mN/m,0.001,52,0.1,72,,72 mN/m - surface tension of a clean water.
-Dispersed-phase flow rate,Qw,μL/hr,2.78E-13,220,10,10000,,
-Continuous-phase flow rate,Qoil,μL/hr,,,10,10000,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
-Droplet volume [final solutions],Vdrop,pL,,,,,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
-"Continuous-phase flow rate, start",QoilStart,μL/hr,2.78E-13,90,,,,
-"Continuous-phase flow rate, end",QoilEnd,μL/hr,2.78E-13,600,,,,
-"Continuous-phase flow rate, step",QoilStep,μL/hr,2.78E-13,100,,,,
-Surfactant molar mass,Ms,kg/mol,,7.5,,,expert,Ionic or Nonionic
-Adsorption Excess,GAMMAinf,mol/m^2,,8E-06,,,expert,Ionic or Nonionic
-Adsorption-rate constant,Kads,m^3/mol/s,,600,,,expert,
-Desorption-rate constant,Kdes,1/s,,8.57E-05,,,expert,"Šie surfaktanto ir adsorbcijos parametrai (raudoni) gali būti ""užfiksuoti"" pagal pasirinktą tipą (joninis/nejoninis)"
-Relative Enthalpy of adsorption,Enth,,,5.629,,,hidden,
-Adsorption saturation index,m,,,0.06,,,hidden,
-Critical micelle concentration,CMC,mol/m^3,,0.128,,,expert,
+description,parameter,html,dimension,SI multiplier,default value,min,max,display,comments
+Zero-shear viscosity (disperse phase),Kd,&eta<sub>d;0</sub>,Pa·s,,0.001,0.0005,5,,
+Infinite-shear viscosity (disperse phase),etaINF1,&eta<sub>d;&infin</sub>,Pa·s,,0.001,0.0002,0.05,,"If the disperse phase is Newtonian fluid, automatically Kd = etaINF1"
+"Consistency (Cross time constant), (disperse phase)",B1,B<sub>1</sub>,s,,4.691,0.01,100,,
+Cross rate constant (disperse phase),p,p,,,1,0,2,,
+Consistency index (continuous phase),Kvisc,,Pa·s,,0.0014,,,hidden,"Šitas parametras gali būti nerodomas (nekeičiamas vartotojo), nes dažniausiai Kvisc = EtaInf"
+Zero-shear viscosity (continuous phase),EtaZero,&eta<sub>c;0</sub>,Pa·s,,0.0014,0.0005,5,,"Mineral oils like M5904, M8410, NF350 are shear-thickening fluids."
+Infinite-shear viscosity (continuous phase),EtaInf,&eta<sub>c;&infin</sub>,Pa·s,,0.0014,0.0002,0.05,,"If the continuous phase is Newtonian fluid, automatically "
+"Consistency (Cross time constant), (continuous phase)",B2,B<sub>2</sub>,s,,77,0.01,100,,
+Cross rate constant (continuous phase),n,n,,,1,0,2,,
+Nozzle width,wn,w<sub>N</sub>,μm,1E-06,70,5,200,,
+Nozzle length,Ln,l<sub>N</sub>,μm,1E-06,60,5,200,,
+Channel height,H,H<sub>chip</sub>,μm,1E-06,80,5,200,,
+Continuous-phase channel width,wcont,w<sub>cont</sub>,μm,1E-06,70,5,300,,
+Dispersed-phase channel width,wdisp,w<sub>disp</sub>,μm,1E-06,60,5,300,,
+Outlet-channel width,wout,w<sub>out</sub>,μm,1E-06,110,5,300,,
+Fraction of dissolved surfactant,omega,&omega,,,0.006,,,,
+Interface tension without any surfactant,sigmaEQ,&gamma<sub>0</sub>,mN/m,0.001,52,0.1,72,,72 mN/m - surface tension of a clean water.
+Dispersed-phase flow rate,Qw,Q<sub>disp</sub>,μL/hr,2.78E-13,220,10,10000,,
+Continuous-phase flow rate,Qoil,Q<sub>cont</sub>,μL/hr,,,10,10000,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
+Droplet volume [final solutions],Vdrop,V<sub>drop</sub>,pL,,,,,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
+"Continuous-phase flow rate, start",QoilStart,,μL/hr,2.78E-13,90,,,,
+"Continuous-phase flow rate, end",QoilEnd,,μL/hr,2.78E-13,600,,,,
+"Continuous-phase flow rate, step",QoilStep,,μL/hr,2.78E-13,100,,,,
+Surfactant molar mass,Ms,M<sub>s</sub>,kg/mol,,7.5,,,expert,Ionic or Nonionic
+Adsorption Excess,GAMMAinf,&Gamma<sub>&infin</sub>,mol/m^2,,8E-06,,,expert,Ionic or Nonionic
+Adsorption-rate constant,Kads,K<sub>ads</sub>,m^3/mol/s,,600,,,expert,
+Desorption-rate constant,Kdes,K<sub>des</sub>,1/s,,8.57E-05,,,expert,"Šie surfaktanto ir adsorbcijos parametrai (raudoni) gali būti ""užfiksuoti"" pagal pasirinktą tipą (joninis/nejoninis)"
+Relative Enthalpy of adsorption,Enth,,,,5.629,,,hidden,
+Adsorption saturation index,m,,,,0.06,,,hidden,
+Critical micelle concentration,CMC,CMC,mol/m^3,,0.128,,,expert,

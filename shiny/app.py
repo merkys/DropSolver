@@ -1,5 +1,6 @@
 from pandas import DataFrame
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
+from shiny.ui import HTML
 from dropsolver import calculate
 from dropsolver.progress import Progress
 from dropsolver.util import inclusive_range
@@ -9,12 +10,14 @@ import dropsolver.parameters
 def create_numeric_input(parameter):
     if 'dimension' in parameter:
         parameter['description'] += ' [{}]'.format(parameter['dimension'])
+    if 'html' in parameter:
+        parameter['description'] += ', {}'.format(parameter['html'])
     if 'min' not in parameter:
         parameter['min'] = None
     if 'max' not in parameter:
         parameter['max'] = None
     return ui.input_numeric(parameter['parameter'],
-                            parameter['description'],
+                            HTML(parameter['description']),
                             parameter['default_value'],
                             min=parameter['min'],
                             max=parameter['max'])
