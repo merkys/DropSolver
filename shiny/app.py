@@ -19,8 +19,18 @@ def create_numeric_input(parameter):
                             min=parameter['min'],
                             max=parameter['max'])
 
-measurements = filter(lambda p: 'default_value' in p and 'display' not in p and 'dimension' in p and p['dimension'] == 'μm', dropsolver.parameters.parameters())
-other = filter(lambda p: 'default_value' in p and 'display' not in p and ('dimension' not in p or p['dimension'] != 'μm'), dropsolver.parameters.parameters())
+measurements = []
+disperse_phase = []
+continuous_phase = []
+other = []
+
+for parameter in dropsolver.parameters.parameters():
+    if 'default_value' not in parameter or 'display' in parameter:
+        pass
+    elif 'dimension' in parameter and parameter['dimension'] == 'μm':
+        measurements.append(parameter)
+    else:
+        other.append(parameter)
 
 app_ui = ui.page_auto(
     ui.card(
