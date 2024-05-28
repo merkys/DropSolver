@@ -29,6 +29,10 @@ for parameter in dropsolver.parameters.parameters():
         pass
     elif 'dimension' in parameter and parameter['dimension'] == 'μm':
         measurements.append(parameter)
+    elif parameter['description'].endswith('(disperse phase)'):
+        disperse_phase.append(parameter)
+    elif parameter['description'].endswith('(continuous phase)'):
+        continuous_phase.append(parameter)
     else:
         other.append(parameter)
 
@@ -43,6 +47,18 @@ app_ui = ui.page_auto(
             ui.page_auto(ui.output_image("junction")),
         ),
     ),
+    ui.card(
+        ui.layout_columns(
+            ui.page_auto([create_numeric_input(p) for p in disperse_phase]),
+            ui.page_auto(ui.output_image("dispersed_phase")),
+        ),
+    ),
+    ui.card(
+        ui.layout_columns(
+            ui.page_auto([create_numeric_input(p) for p in continuous_phase]),
+            ui.page_auto(ui.output_image("continuous_phase")),
+        ),
+    ),
     ui.card([create_numeric_input(p) for p in other]),
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
@@ -54,6 +70,14 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.image
     def junction():
         return {"src": "shiny/junction.svg", "width": "300px"}
+
+    @render.image
+    def dispersed_phase():
+        return {"src": "shiny/dispersed-phase.svg", "width": "300px"}
+
+    @render.image
+    def continuous_phase():
+        return {"src": "shiny/continuous-phase.svg", "width": "300px"}
 
     @render.data_frame
     def result_dataframe():
