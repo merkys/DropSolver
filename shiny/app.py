@@ -41,8 +41,8 @@ for parameter in dropsolver.parameters.parameters():
 
 app_ui = ui.page_auto(
     ui.card(
-        ui.input_switch("is_ionic", "Ionic", True),
-        ui.input_switch("is_newtonian", "Newtonian", False),
+        ui.input_switch("is_ionic", "Ionic (left: non-ionic, right: ionic)", True),
+        ui.input_switch("is_newtonian", "Newtonian (left: non-Newtonian, right: Newtonian)", False),
     ),
     ui.card(
         ui.layout_columns(
