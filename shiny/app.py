@@ -72,15 +72,15 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.image
     def junction():
-        return {"src": "shiny/junction.svg", "width": "300px"}
+        return {"src": "shiny/junction.svg", "width": "400em"}
 
     @render.image
     def dispersed_phase():
-        return {"src": "shiny/dispersed-phase.svg", "width": "300px"}
+        return {"src": "shiny/dispersed-phase.svg", "width": "500em"}
 
     @render.image
     def continuous_phase():
-        return {"src": "shiny/continuous-phase.svg", "width": "300px"}
+        return {"src": "shiny/continuous-phase.svg", "width": "500em"}
 
     @render.data_frame
     def result_dataframe():
