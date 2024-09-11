@@ -14,7 +14,7 @@ Channel height,H,H<sub>chip</sub>,μm,1E-06,80,5,200,,
 Continuous-phase channel width,wcont,w<sub>cont</sub>,μm,1E-06,70,5,300,,
 Dispersed-phase channel width,wdisp,w<sub>disp</sub>,μm,1E-06,60,5,300,,
 Outlet-channel width,wout,w<sub>out</sub>,μm,1E-06,110,5,300,,
-Fraction of dissolved surfactant,omega,&omega;,,,0.006,,,,
+Percentage weight-to-weight of dissolved surfactant,omega,&omega;,,,0.006,0,100,,
 Interface tension without any surfactant,sigmaEQ,&gamma;<sub>0</sub>,mN/m,0.001,52,0.1,72,,72 mN/m - surface tension of a clean water.
 Dispersed-phase flow rate,Qw,Q<sub>disp</sub>,μL/hr,2.78E-13,220,10,10000,,
 Continuous-phase flow rate,Qoil,Q<sub>cont</sub>,μL/hr,,,10,10000,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
