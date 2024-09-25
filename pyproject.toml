@@ -1,6 +1,7 @@
 [project]
 name = "dropsolver"
 version = "0.1.0-dev"
+license = { text = "BSD-3-Clause" }
 dependencies = [
     "numpy",
     "scipy",
@@ -11,7 +12,7 @@ authors = [
     { name = "Andrius Merkys", email = "andrius.merkys@gmc.vu.lt" },
 ]
 classifiers = [
-    "License :: OSI Approved :: BSD-3-Clause License",
+    "License :: OSI Approved :: BSD License",
 ]
 [project.optional-dependencies]
 test = [
