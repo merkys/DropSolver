@@ -1,4 +1,5 @@
 from pandas import DataFrame
+from pathlib import Path
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from shiny.ui import HTML
 from dropsolver import calculate
@@ -40,6 +41,7 @@ for parameter in dropsolver.parameters.parameters():
         other.append(parameter)
 
 app_ui = ui.page_auto(
+    ui.include_css(Path(__file__).parent / "dropsolver.css"),
     ui.card(
         ui.input_switch("is_ionic", "Ionic (left: non-ionic, right: ionic)", True),
         ui.input_switch("is_newtonian", "Newtonian (left: non-Newtonian, right: Newtonian)", False),
@@ -53,13 +55,117 @@ app_ui = ui.page_auto(
     ui.card(
         ui.layout_columns(
             ui.page_auto([create_numeric_input(p) for p in disperse_phase]),
-            ui.page_auto(ui.output_image("dispersed_phase")),
+            ui.page_auto({"class": "center"}, [ui.output_image("dispersed_phase"), ui.HTML("""
+<p>
+    <math>
+        <mrow>
+            <msub>
+                <mi>&eta;</mi>
+                <mi>d</mi>
+            </msub>
+            <mo>=</mo>
+            <msubsup>
+                <mi>&eta;</mi>
+                <mi>&infin;</mi>
+                <mi>(d)</mi>
+            </msubsup>
+            <mo>+</mo>
+            <mfrac>
+                <mrow>
+                    <msub>
+                        <mi>K</mi>
+                        <mi>d</mi>
+                    </msub>
+                    <mo>-</mo>
+                    <msubsup>
+                        <mi>&eta;</mi>
+                        <mi>&infin;</mi>
+                        <mi>(d)</mi>
+                    </msubsup>
+                </mrow>
+                <mrow>
+                    <mn>1</mn>
+                    <mo>+</mo>
+                    <msup>
+                        <mrow>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>B</mi>
+                                <mn>1</mn>
+                            </msub>
+                            <mo>&InvisibleTimes;</mo>
+                            <mover>
+                                <mi>&gamma;</mi>
+                                <mo>.</mo>
+                            </mover>
+                            <mo>)</mo>
+                        </mrow>
+                        <mi>p</mi>
+                    </msup>
+                </mrow>
+            </mfrac>
+        </mrow>
+    </math>
+</p>
+            """)]),
         ),
     ),
     ui.card(
         ui.layout_columns(
             ui.page_auto([create_numeric_input(p) for p in continuous_phase]),
-            ui.page_auto(ui.output_image("continuous_phase")),
+            ui.page_auto({"class": "center"}, [ui.output_image("continuous_phase"), ui.HTML("""
+<p>
+    <math>
+        <mrow>
+            <msub>
+                <mi>&eta;</mi>
+                <mi>c</mi>
+            </msub>
+            <mo>=</mo>
+            <msubsup>
+                <mi>&eta;</mi>
+                <mi>&infin;</mi>
+                <mi>(c)</mi>
+            </msubsup>
+            <mo>+</mo>
+            <mfrac>
+                <mrow>
+                    <msub>
+                        <mi>&eta;</mi>
+                        <mi>0</mi>
+                    </msub>
+                    <mo>-</mo>
+                    <msubsup>
+                        <mi>&eta;</mi>
+                        <mi>&infin;</mi>
+                        <mi>(c)</mi>
+                    </msubsup>
+                </mrow>
+                <mrow>
+                    <mn>1</mn>
+                    <mo>+</mo>
+                    <msup>
+                        <mrow>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>B</mi>
+                                <mn>2</mn>
+                            </msub>
+                            <mo>&InvisibleTimes;</mo>
+                            <mover>
+                                <mi>&gamma;</mi>
+                                <mo>.</mo>
+                            </mover>
+                            <mo>)</mo>
+                        </mrow>
+                        <mi>n</mi>
+                    </msup>
+                </mrow>
+            </mfrac>
+        </mrow>
+    </math>
+</p>
+            """)]),
         ),
     ),
     ui.card([create_numeric_input(p) for p in other]),
