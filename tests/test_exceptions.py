@@ -22,3 +22,8 @@ class TestExceptions(unittest.TestCase):
         target = numpy.array([[50, 0.152369], [100, 0.126003], [150, 0.113378], [200, 0.105204], [250,0.0992039], [300, 0.0944858]])
         result = calculate(B1=1, B2=0.78, p=1, Kvisc=0.0294, EtaZero=0.0294, EtaInf=0.0326, n=2, omega=0.01, Qw=50*Q_SI_multiplier, QoilStart=50*Q_SI_multiplier, QoilEnd=300*Q_SI_multiplier, QoilStep=50*Q_SI_multiplier, wn=20*micrometre, Ln=20*micrometre, H=20*micrometre, wcont=30*micrometre, wdisp=40*micrometre, wout=70*micrometre, is_ionic=False)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
+
+    # Nozzle length too short for first and second values to be non-negative
+    def test_negative(self):
+        result = calculate(Ln=30*micrometre)
+        self.assertEqual(len(list(filter(numpy.isnan, result[:,1]))), 2)

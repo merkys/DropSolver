@@ -274,7 +274,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     for Qoil in data22_x:
         try:
             data22_y.append(newton(LHS_RHS_diff, x0=LIM1, x1=LIM2, args=(Qoil,)))
-        except RuntimeError:
+        except (RuntimeError, TypeError):
             data22_y.append(numpy.nan)
         if reporter:
             reporter.ping()
