@@ -48,14 +48,14 @@ app_ui = ui.page_auto(
     ),
     ui.card(
         ui.layout_columns(
-            ui.page_auto([create_numeric_input(p) for p in measurements]),
-            ui.page_auto(ui.output_image("junction")),
+            ui.card([create_numeric_input(p) for p in measurements]),
+            ui.card(ui.output_image("junction")),
         ),
     ),
     ui.card(
         ui.layout_columns(
-            ui.page_auto([create_numeric_input(p) for p in disperse_phase]),
-            ui.page_auto({"class": "center"}, [ui.output_image("dispersed_phase"), ui.HTML("""
+            ui.card([create_numeric_input(p) for p in disperse_phase]),
+            ui.card({"class": "center"}, [ui.output_image("dispersed_phase"), ui.HTML("""
 <p>
     <math>
         <mrow>
@@ -112,8 +112,8 @@ app_ui = ui.page_auto(
     ),
     ui.card(
         ui.layout_columns(
-            ui.page_auto([create_numeric_input(p) for p in continuous_phase]),
-            ui.page_auto({"class": "center"}, [ui.output_image("continuous_phase"), ui.HTML("""
+            ui.card([create_numeric_input(p) for p in continuous_phase]),
+            ui.card({"class": "center"}, [ui.output_image("continuous_phase"), ui.HTML("""
 <p>
     <math>
         <mrow>
