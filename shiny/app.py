@@ -43,13 +43,21 @@ for parameter in dropsolver.parameters.parameters():
 app_ui = ui.page_auto(
     ui.include_css(Path(__file__).parent / "dropsolver.css"),
     ui.card(
-        ui.input_switch("is_ionic", "Ionic (left: non-ionic, right: ionic)", True),
-        ui.input_switch("is_newtonian", "Newtonian (left: non-Newtonian, right: Newtonian)", False),
+        ui.input_radio_buttons(
+            "is_ionic",
+            "",
+            { True: "Ionic", False: "Non-ionic" },
+        ),
+        ui.input_radio_buttons(
+            "is_newtonian",
+            "",
+            { True: "Newtonian", False: "Non-Newtonian" },
+        ),
     ),
     ui.card(
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in measurements]),
-            ui.card(ui.output_image("junction")),
+            ui.card({"class": "center"}, ui.output_image("junction")),
         ),
     ),
     ui.card(
