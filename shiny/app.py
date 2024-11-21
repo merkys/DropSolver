@@ -1,3 +1,4 @@
+from matplotlib import pyplot
 from pandas import DataFrame
 from pathlib import Path
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
@@ -183,6 +184,7 @@ app_ui = ui.page_auto(
     ui.card([create_numeric_input(p) for p in other]),
     ui.input_action_button("calculate", "Calculate"),
     ui.output_data_frame("result_dataframe"),
+    ui.output_plot("result_plot"),
 )
 
 def server(input: Inputs, output: Outputs, session: Session):
@@ -195,6 +197,12 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     def result_dataframe():
         return render.DataGrid(df())
+
+    @render.plot
+    def result_plot():
+        figure, axes = pyplot.subplots()
+        axes.scatter(list(df()["Qoil [μL/hr]"]), list(df()["Vdrop [pL]"]))
+        return figure
 
     @reactive.Effect
     @reactive.event(input.is_newtonian)
