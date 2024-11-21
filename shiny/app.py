@@ -1,12 +1,11 @@
+from dropsolver import calculate
+from dropsolver.progress import Progress
+from dropsolver.util import inclusive_range
 from matplotlib import pyplot
 from pandas import DataFrame
 from pathlib import Path
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from shiny.ui import HTML
-from dropsolver import calculate
-from dropsolver.progress import Progress
-from dropsolver.util import inclusive_range
-import pandas
 import dropsolver.parameters
 
 def create_numeric_input(parameter):
