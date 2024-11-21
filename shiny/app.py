@@ -4,9 +4,11 @@ from dropsolver.util import inclusive_range
 from matplotlib import pyplot
 from pandas import DataFrame
 from pathlib import Path
+from scipy.interpolate import interp1d
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from shiny.ui import HTML
 import dropsolver.parameters
+import numpy
 
 def create_numeric_input(parameter):
     if 'dimension' in parameter:
@@ -201,6 +203,9 @@ def server(input: Inputs, output: Outputs, session: Session):
     def result_plot():
         figure, axes = pyplot.subplots()
         axes.scatter(list(df()["Qoil [μL/hr]"]), list(df()["Vdrop [pL]"]))
+        cubic = interp1d(list(df()["Qoil [μL/hr]"]), list(df()["Vdrop [pL]"]), kind="cubic")
+        x = numpy.arange(min(list(df()["Qoil [μL/hr]"])), max(list(df()["Qoil [μL/hr]"])), 1)
+        axes.plot(x, cubic(x))
         return figure
 
     @reactive.Effect
