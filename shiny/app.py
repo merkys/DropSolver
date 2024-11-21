@@ -63,7 +63,7 @@ app_ui = ui.page_auto(
     ui.card(
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in disperse_phase]),
-            ui.card({"class": "center"}, [ui.output_image("dispersed_phase"), ui.HTML("""
+            ui.card({"class": "center"}, ui.HTML("""
 <p>
     <math>
         <mrow>
@@ -115,13 +115,13 @@ app_ui = ui.page_auto(
         </mrow>
     </math>
 </p>
-            """)]),
+            """)),
         ),
     ),
     ui.card(
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in continuous_phase]),
-            ui.card({"class": "center"}, [ui.output_image("continuous_phase"), ui.HTML("""
+            ui.card({"class": "center"}, ui.HTML("""
 <p>
     <math>
         <mrow>
@@ -173,7 +173,7 @@ app_ui = ui.page_auto(
         </mrow>
     </math>
 </p>
-            """)]),
+            """)),
         ),
     ),
     ui.card([create_numeric_input(p) for p in other]),
@@ -187,14 +187,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.image
     def junction():
         return {"src": "shiny/junction.svg", "width": "400em"}
-
-    @render.image
-    def dispersed_phase():
-        return {"src": "shiny/dispersed-phase.svg", "width": "500em"}
-
-    @render.image
-    def continuous_phase():
-        return {"src": "shiny/continuous-phase.svg", "width": "500em"}
 
     @render.data_frame
     def result_dataframe():
