@@ -43,6 +43,7 @@ for parameter in dropsolver.parameters.parameters():
 app_ui = ui.page_auto(
     ui.include_css(Path(__file__).parent / "dropsolver.css"),
     ui.card(
+        ui.card_header("Surfactant type"),
         ui.input_radio_buttons(
             "is_ionic",
             "",
@@ -55,12 +56,14 @@ app_ui = ui.page_auto(
         ),
     ),
     ui.card(
+        ui.card_header("Geometry"),
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in measurements]),
             ui.card({"class": "center"}, ui.output_image("junction")),
         ),
     ),
     ui.card(
+        ui.card_header("Disperse phase"),
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in disperse_phase]),
             ui.card({"class": "center"}, ui.HTML("""
@@ -119,6 +122,7 @@ app_ui = ui.page_auto(
         ),
     ),
     ui.card(
+        ui.card_header("Continuous phase"),
         ui.layout_columns(
             ui.card([create_numeric_input(p) for p in continuous_phase]),
             ui.card({"class": "center"}, ui.HTML("""
