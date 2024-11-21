@@ -3,6 +3,7 @@ name = "dropsolver"
 version = "0.1.0-dev"
 license = { text = "BSD-3-Clause" }
 dependencies = [
+    "matplotlib",
     "numpy",
     "scipy",
     "sympy",
