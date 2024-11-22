@@ -70,7 +70,13 @@ app_ui = ui.page_auto(
     ui.card(
         ui.card_header("Disperse phase"),
         ui.layout_columns(
-            ui.card([create_numeric_input(p) for p in disperse_phase]),
+            ui.card(
+                create_numeric_input(disperse_phase[0]),
+                ui.panel_conditional(
+                    "input.is_newtonian",
+                    [create_numeric_input(p) for p in disperse_phase[1:]],
+                ),
+            ),
             ui.card({"class": "center"}, ui.HTML("""
 <p>
     <math>
@@ -129,7 +135,13 @@ app_ui = ui.page_auto(
     ui.card(
         ui.card_header("Continuous phase"),
         ui.layout_columns(
-            ui.card([create_numeric_input(p) for p in continuous_phase]),
+            ui.card(
+                create_numeric_input(continuous_phase[0]),
+                ui.panel_conditional(
+                    "input.is_newtonian",
+                    [create_numeric_input(p) for p in continuous_phase[1:]],
+                ),
+            ),
             ui.card({"class": "center"}, ui.HTML("""
 <p>
     <math>
