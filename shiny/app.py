@@ -51,6 +51,9 @@ app_ui = ui.page_auto(
             "",
             { True: "Ionic", False: "Non-ionic" },
         ),
+    ),
+    ui.card(
+        ui.card_header("Viscosity type"),
         ui.input_radio_buttons(
             "is_newtonian",
             "",
