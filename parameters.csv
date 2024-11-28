@@ -6,7 +6,7 @@ Cross rate constant (disperse phase),p,p,,,1,0,2,,
 Consistency index (continuous phase),Kvisc,,Pa·s,,0.0014,,,hidden,"Šitas parametras gali būti nerodomas (nekeičiamas vartotojo), nes dažniausiai Kvisc = EtaInf"
 Zero-shear viscosity (continuous phase),EtaZero,&eta;<sub>c;0</sub>,Pa·s,,0.0014,0.0005,5,,"Mineral oils like M5904, M8410, NF350 are shear-thickening fluids."
 Infinite-shear viscosity (continuous phase),EtaInf,&eta;<sub>c;&infin;</sub>,Pa·s,,0.0014,0.0002,0.05,,"If the continuous phase is Newtonian fluid, automatically "
-"Consistency (Cross time constant), (continuous phase)",B2,B<sub>2</sub>,s,,77,0.01,100,,
+"Consistency (Cross time constant), (continuous phase)",B2,B<sub>2</sub>,s,,1.298701,0.01,100,,
 Cross rate constant (continuous phase),n,n,,,1,0,2,,
 Nozzle width,wn,w<sub>N</sub>,μm,1E-06,70,5,200,,
 Nozzle length,Ln,l<sub>N</sub>,μm,1E-06,60,5,200,,
@@ -14,7 +14,7 @@ Channel height,H,H<sub>chip</sub>,μm,1E-06,80,5,200,,
 Continuous-phase channel width,wcont,w<sub>cont</sub>,μm,1E-06,70,5,300,,
 Dispersed-phase channel width,wdisp,w<sub>disp</sub>,μm,1E-06,60,5,300,,
 Outlet-channel width,wout,w<sub>out</sub>,μm,1E-06,110,5,300,,
-Percentage weight-to-weight of dissolved surfactant,omega,&omega;,,,0.006,0,100,,
+Percentage weight-to-weight of dissolved surfactant,omega,&omega;,,,0.006,0,1,,
 Interface tension without any surfactant,sigmaEQ,&gamma;<sub>0</sub>,mN/m,0.001,52,0.1,72,,72 mN/m - surface tension of a clean water.
 Dispersed-phase flow rate,Qw,Q<sub>disp</sub>,μL/hr,2.78E-13,220,10,10000,,
 Continuous-phase flow rate,Qoil,Q<sub>cont</sub>,μL/hr,,,10,10000,,"Sprendinių lentelėje pateikiamos vertės (Qoil, [μL/hr] ir Vdrop, [pL])"
