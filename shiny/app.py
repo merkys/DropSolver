@@ -49,7 +49,7 @@ app_ui = ui.page_auto(
         ui.input_radio_buttons(
             "is_ionic",
             "",
-            { True: "Ionic", False: "Non-ionic" },
+            { 1: "Ionic", 0: "Non-ionic" },
         ),
     ),
     ui.card(
@@ -57,7 +57,7 @@ app_ui = ui.page_auto(
         ui.input_radio_buttons(
             "is_newtonian",
             "",
-            { True: "Newtonian", False: "Non-Newtonian" },
+            { 1: "Newtonian", 0: "Non-Newtonian" },
         ),
     ),
     ui.card(
@@ -73,7 +73,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(disperse_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian",
+                    "input.is_newtonian == 1",
                     [create_numeric_input(p) for p in disperse_phase[1:]],
                 ),
             ),
@@ -138,7 +138,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(continuous_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian",
+                    "input.is_newtonian == 1",
                     [create_numeric_input(p) for p in continuous_phase[1:]],
                 ),
             ),
@@ -247,7 +247,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ui.modal_show(msg)
         else:
             parameters = dropsolver.parameters.parameters()
-            args = { 'is_ionic': bool(input.is_ionic()) }
+            args = { 'is_ionic': bool(int(input.is_ionic())) }
             for parameter in parameters:
                 if parameter['parameter'] not in input:
                     continue
