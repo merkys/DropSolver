@@ -228,12 +228,10 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.is_newtonian)
     def _():
-        if input.is_newtonian():
+        if bool(int(input.is_newtonian())):
             # These two values have to be equal
             ui.update_numeric("Kd", value=input.etaINF1())
             ui.update_numeric("EtaZero", value=input.EtaInf())
-        else:
-            pass
 
     @reactive.Effect
     @reactive.event(input.calculate)
