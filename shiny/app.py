@@ -73,7 +73,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(disperse_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian == 1",
+                    "input.is_newtonian == 0",
                     [create_numeric_input(p) for p in disperse_phase[1:]],
                 ),
             ),
@@ -138,7 +138,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(continuous_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian == 1",
+                    "input.is_newtonian == 0",
                     [create_numeric_input(p) for p in continuous_phase[1:]],
                 ),
             ),
