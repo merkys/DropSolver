@@ -53,9 +53,17 @@ app_ui = ui.page_auto(
         ),
     ),
     ui.card(
-        ui.card_header("Viscosity type"),
+        ui.card_header("Disperse phase viscosity"),
         ui.input_radio_buttons(
-            "is_newtonian",
+            "is_disperse_newtonian",
+            "",
+            { 1: "Newtonian", 0: "Non-Newtonian" },
+        ),
+    ),
+    ui.card(
+        ui.card_header("Continuous phase viscosity"),
+        ui.input_radio_buttons(
+            "is_continuous_newtonian",
             "",
             { 1: "Newtonian", 0: "Non-Newtonian" },
         ),
@@ -73,7 +81,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(disperse_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian == 0",
+                    "input.is_disperse_newtonian == 0",
                     [create_numeric_input(p) for p in disperse_phase[1:]],
                 ),
             ),
@@ -138,7 +146,7 @@ app_ui = ui.page_auto(
             ui.card(
                 create_numeric_input(continuous_phase[0]),
                 ui.panel_conditional(
-                    "input.is_newtonian == 0",
+                    "input.is_continuous_newtonian == 0",
                     [create_numeric_input(p) for p in continuous_phase[1:]],
                 ),
             ),
