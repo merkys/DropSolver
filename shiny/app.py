@@ -234,11 +234,17 @@ def server(input: Inputs, output: Outputs, session: Session):
         return figure
 
     @reactive.Effect
-    @reactive.event(input.is_newtonian)
+    @reactive.event(input.is_disperse_newtonian)
     def _():
-        if bool(int(input.is_newtonian())):
-            # These two values have to be equal
+        if bool(int(input.is_disperse_newtonian())):
+            # This value has to be set to equal
             ui.update_numeric("Kd", value=input.etaINF1())
+
+    @reactive.Effect
+    @reactive.event(input.is_continuous_newtonian)
+    def _():
+        if bool(int(input.is_continuous_newtonian())):
+            # This value has to be set to equal
             ui.update_numeric("EtaZero", value=input.EtaInf())
 
     @reactive.Effect
