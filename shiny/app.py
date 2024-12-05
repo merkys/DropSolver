@@ -85,8 +85,8 @@ app_ui = ui.page_auto(
                     [create_numeric_input(p) for p in disperse_phase[1:]],
                 ),
             ),
-            ui.card({"class": "center"}, ui.HTML("""
-<p>
+            ui.card(ui.HTML("""
+<p class="center">
     <math>
         <mrow>
             <msub>
@@ -137,6 +137,9 @@ app_ui = ui.page_auto(
         </mrow>
     </math>
 </p>
+<details>
+Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (Kd,  , B1, p) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
+</details>
             """)),
         ),
     ),
@@ -150,8 +153,8 @@ app_ui = ui.page_auto(
                     [create_numeric_input(p) for p in continuous_phase[1:]],
                 ),
             ),
-            ui.card({"class": "center"}, ui.HTML("""
-<p>
+            ui.card(ui.HTML("""
+<p class="center">
     <math>
         <mrow>
             <msub>
@@ -202,6 +205,9 @@ app_ui = ui.page_auto(
         </mrow>
     </math>
 </p>
+<details>
+Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (η0 ,  , B2, n) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
+</details>
             """)),
         ),
     ),
