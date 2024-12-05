@@ -228,6 +228,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         axes.scatter(list(df()["Qoil [μL/hr]"]), list(df()["Vdrop [pL]"]))
         cubic = interp1d(list(df()["Qoil [μL/hr]"]), list(df()["Vdrop [pL]"]), kind="cubic")
         x = numpy.arange(min(list(df()["Qoil [μL/hr]"])), max(list(df()["Qoil [μL/hr]"])), 1)
+        axes.grid()
         axes.plot(x, cubic(x))
         axes.set_xlabel("Qoil [μL/hr]")
         axes.set_ylabel("Vdrop [pL]")
