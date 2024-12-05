@@ -1,3 +1,7 @@
 p.center {
     text-align: center;
 }
+
+details {
+    font-size: small;
+}
