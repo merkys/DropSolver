@@ -138,7 +138,7 @@ app_ui = ui.page_auto(
     </math>
 </p>
 <details>
-Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (Kd,  , B1, p) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
+Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (<math><msub><mi>K</mi><mi>d</mi></msub></math>,  , B1, <math><mi>p</mi></math>) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
 </details>
             """)),
         ),
@@ -206,7 +206,7 @@ Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for
     </math>
 </p>
 <details>
-Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (η0 ,  , B2, n) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
+Non-Newtonian fluid viscosity is approximated by Cross model. The parameters for an actual solution (<math><msub><mi>&eta;</mi><mi>0</mi></msub></math>,  , B2, <math><mi>n</mi></math>) might be found by rheometric measurement of viscosity (for example, <i>Anton Paar MCR</i> series rheometer) and fitting the Cross model using <i>RheoCompass</i> software or fitting the Sigmoid function to the datapoints (x=shear-rate, y=viscosity) in other software (<i>Origin</i>, <i>Python</i> etc.). For Newtonian (constant viscosity) fluid zero-shear viscosity and infinite-shear viscosity are equal.
 </details>
             """)),
         ),
