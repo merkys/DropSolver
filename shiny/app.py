@@ -45,7 +45,7 @@ for parameter in dropsolver.parameters.parameters():
 app_ui = ui.page_auto(
     ui.include_css(Path(__file__).parent / "dropsolver.css"),
     ui.card(
-        ui.card_header("Surfactant type"),
+        ui.card_header("Surfactant type (dissolved in continuous phase)"),
         ui.input_radio_buttons(
             "is_ionic",
             "",
