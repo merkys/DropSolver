@@ -245,20 +245,6 @@ def server(input: Inputs, output: Outputs, session: Session):
         return figure
 
     @reactive.Effect
-    @reactive.event(input.is_disperse_newtonian)
-    def _():
-        if bool(int(input.is_disperse_newtonian())):
-            # This value has to be set to equal
-            ui.update_numeric("Kd", value=input.etaINF1())
-
-    @reactive.Effect
-    @reactive.event(input.is_continuous_newtonian)
-    def _():
-        if bool(int(input.is_continuous_newtonian())):
-            # This value has to be set to equal
-            ui.update_numeric("EtaZero", value=input.EtaInf())
-
-    @reactive.Effect
     @reactive.event(input.calculate)
     def _():
         npoints = len(inclusive_range(input.QoilStart(), input.QoilEnd(), input.QoilStep()))
@@ -281,6 +267,10 @@ def server(input: Inputs, output: Outputs, session: Session):
                     args[parameter['parameter']] = float(args[parameter['parameter']])
                 if 'SI_multiplier' in parameter:
                     args[parameter['parameter']] *= parameter['SI_multiplier']
+            if bool(int(input.is_disperse_newtonian())):
+                args["Kd"] = args["etaINF1"]
+            if bool(int(input.is_continuous_newtonian())):
+                args["EtaZero"] = args["EtaInf"]
             with ui.Progress(min=1, max=npoints) as progress_bar:
                 progress_bar.set(message="Preparing")
                 progress = Progress(progress_bar, "Calculating")
