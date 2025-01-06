@@ -290,7 +290,8 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
 
     # In[153]:=
     data2_x = data22_x / (2.78 * 10 ** -13)
-    data2_y = Qw/(10 ** -15) * data22_y
+    data2_y = Qw / (10 ** -15) * data22_y
+    data2_z = Qw / 2.78e-13 / data2_y * 1000 / 3.6
     if debug:
         print(data2_x)
         print(data2_y)
@@ -303,4 +304,4 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def Vd(Qoil):
         return wn**3 / 0.7*(wn/Ln)**2.5*(etaw(Qoil,wjet0sol)*Qw/wdisp/etaoNN(Qoil,wjet0sol)/Qoil*wcont)**(2/3)/(1+(etaw(Qoil,wjet0sol)*Qw/wdisp/H/sigmaEQ)**(1/3))**2
 
-    return numpy.transpose(numpy.vstack((data2_x, data2_y)))
+    return numpy.transpose(numpy.vstack((data2_x, data2_y, data2_z)))

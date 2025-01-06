@@ -275,6 +275,6 @@ def server(input: Inputs, output: Outputs, session: Session):
                 progress_bar.set(message="Preparing")
                 progress = Progress(progress_bar, "Calculating")
                 table = calculate(**args, reporter=progress)
-            df.set(DataFrame(table, columns=["Qoil [μL/hr]", "Vdrop [pL]"]))
+            df.set(DataFrame(table, columns=["Qoil [μL/hr]", "Vdrop [pL]", "f [1/s]"]))
 
 app = App(app_ui, server)
