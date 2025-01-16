@@ -95,7 +95,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     def Ldrop(Tdrop=Tdrop):
         return H+(Tdrop*Qw-pi/6*H**3)/wout/H
     def L(Qoil, Tdrop=Tdrop):
-        return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5+2*Ln+2*Ldrop(Tdrop)+pi*H
+        return 2*((wdisp - wjet0solF(Qoil))**2+4 * wcont**2)**0.5
 
     # In[79]:=
     if debug:
