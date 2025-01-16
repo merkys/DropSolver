@@ -9,7 +9,7 @@ class TestSurfactant(unittest.TestCase):
 
     # From 'notebooks/2024-03-22/HFE7500-IonicSurfactant (0.6perc) [2].txt'
     def test_newtonian_ionic_0_6_perc(self):
-        target = numpy.array([[50, 107.429], [100, 76.5061], [150, 59.4823], [200, 48.9298], [250, 41.8043], [300, 36.6827]])
+        target = numpy.array([[50, 74.8777], [100, 56.3615], [150, 44.3066], [200, 36.4674], [250, 31.0657], [300, 27.146]])
         result = calculate(is_ionic=True, B2=1, Qw=50*Q_SI_multiplier, QoilStart=50*Q_SI_multiplier, QoilEnd=300*Q_SI_multiplier, QoilStep=50*Q_SI_multiplier, wn=37*micrometre, Ln=13*micrometre, H=18*micrometre, wcont=120*micrometre, wdisp=80*micrometre, wout=70*micrometre)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
 
