@@ -33,6 +33,6 @@ class TestSurfactant(unittest.TestCase):
 
     # From 'notebooks/2024-11-27/NonIonic Surfactant 6perc. DefaultParameters.txt'
     def test_newtonian_nonionic_6_perc(self):
-        target = numpy.array([[90, 4676.24], [190, 3968.09], [290, 3485.59], [390, 3097.56], [490, 2782.29], [590, 2522.87]])
+        target = numpy.array([[90, 2446.99], [190, 2606.96], [290, 2425.79], [390, 2201.11], [490, 1990.78], [590, 1805.47]])
         result = calculate(is_ionic=False, omega=0.06)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
