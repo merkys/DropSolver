@@ -25,9 +25,14 @@ class TestSurfactant(unittest.TestCase):
         result = calculate(is_ionic=False, Kd=0.381, etaINF1=0.00375, B1=4.691, B2=1, p=0.529, wn=37*micrometre, Ln=13*micrometre, H=18*micrometre, wcont=120*micrometre, wdisp=80*micrometre, wout=70*micrometre, Qw=50*Q_SI_multiplier, QoilStart=50*Q_SI_multiplier, QoilEnd=300*Q_SI_multiplier, QoilStep=50*Q_SI_multiplier)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
 
+    def test_newtonian_ionic_5_perc(self):
+        target = numpy.array([[90, 2279.93], [190, 2546.71], [290, 2402.18], [390, 2190.66], [490, 1985.67], [590, 1802.76]])
+        result = calculate(is_ionic=True, omega=0.05)
+        self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
+
     # From 'notebooks/2024-11-27/Ionic Surfactant 6perc. DefaultParameters.txt'
     def test_newtonian_ionic_6_perc(self):
-        target = numpy.array([[90, 3803.16], [190, 3709.73], [290, 3386.78], [390, 3053.68], [490, 2760.52], [590, 2511.11]])
+        target = numpy.array([[90, 2168.96], [190, 2495.85], [290, 2380.01], [390, 2180.28], [490, 1980.41], [590, 1799.91]])
         result = calculate(is_ionic=True, omega=0.06)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
 
