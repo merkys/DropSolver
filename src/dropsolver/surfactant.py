@@ -55,7 +55,7 @@ def calculate(Kd=0.001, etaINF1=0.001, B1=4.691, p=1.0, Kvisc=0.0014, EtaZero=0.
     data_x = inclusive_range(QoilStart, QoilEnd, QoilStep)
     data_y = []
     for Qoil in data_x:
-        data_y.append(newton(lhs_rhs_diff, x0=(Kd*Qw)/(EtaZero*QoilEnd)*wn, x1=wn, args=(float(Qoil),)))
+        data_y.append(newton(lhs_rhs_diff, x0=(etaINF1*Qw)/(EtaInf*QoilEnd)*wn, x1=0.95*wn, args=(float(Qoil),)))
     if debug:
         print(data_x)
         print(data_y)
