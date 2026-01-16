@@ -36,3 +36,9 @@ class TestSurfactant(unittest.TestCase):
         target = numpy.array([[90, 2446.99], [190, 2606.96], [290, 2425.79], [390, 2201.11], [490, 1990.78], [590, 1805.47]])
         result = calculate(is_ionic=False, omega=0.06)
         self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
+
+    # ~ def test_non_newtonian_nonionic(self):
+        # ~ target = numpy.array([[100, 72.5572], [200, 52.1084], [300, 36.1085], [400, 25.5143], [500, 18.6754], [600, 14.186], [700, 11.1508], [800, 9.032], [900, 7.5064], [1000, 6.3763], [1100, 5.5175], [1200, 4.8496], [1300, 4.3197], [1400, 3.8917], [1500, 3.5403]])
+        # ~ result = calculate(is_ionic=False, Kd=1.276, etaINF1=0.00532, B1=4.578, p=0.672, EtaZero=0.006, EtaInf=0.016, B2=0.0001, n=1.48, wn=40*micrometre, Ln=10*micrometre, H=28*micrometre, wcont=30*micrometre, wdisp=40*micrometre, wout=70*micrometre, sigmaEQ=0.0375, omega=0.026, Qw=100*Q_SI_multiplier, QoilStart=100*Q_SI_multiplier, QoilEnd=1500*Q_SI_multiplier, QoilStep=100*Q_SI_multiplier)
+        # ~ print(result)
+        # ~ self.assertLess(max(abs(target[:,1] - result[:,1])/target[:,1]), 0.1)
